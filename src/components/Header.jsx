@@ -5,7 +5,6 @@ const links = [
   { to: "/home", label: "Member" },
   { to: "/machines", label: "Machines" },
   { to: "/pass", label: "Pass" },
-  { to: "/admin", label: "Admin" },
 ];
 
 const Header = () => {
