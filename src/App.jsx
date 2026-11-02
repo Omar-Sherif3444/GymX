@@ -12,7 +12,6 @@ import MemberHome from "./pages/member/MemberHome";
 import MachinesGuide from "./pages/member/MachinesGuide";
 import MemberPass from "./pages/member/MemberPass";
 
-
 const App = () => {
   return (
     <div className="flex min-h-screen flex-col">
@@ -28,7 +27,6 @@ const App = () => {
           <Route path="/home" element={<MemberHome />} />
           <Route path="/machines" element={<MachinesGuide />} />
           <Route path="/pass" element={<MemberPass />} />
-
 
           <Route path="*" element={<NotFound />} />
         </Routes>
