@@ -2,9 +2,10 @@ import { Link, NavLink } from "react-router-dom";
 
 const links = [
   { to: "/", label: "Home" },
-  { to: "/home", label: "Member" },
-  { to: "/machines", label: "Machines" },
-  { to: "/pass", label: "Pass" },
+  { to: "/member", label: "Member" },
+  { to: "/member/machines-guide", label: "Machines" },
+  { to: "/member/pass", label: "Pass" },
+  { to: "/admin", label: "Admin" }, // temporary, for testing. Remove later.
 ];
 
 const Header = () => {
@@ -20,9 +21,11 @@ const Header = () => {
           <NavLink
             key={link.to}
             to={link.to}
-            end
+            end={link.to === "/" || link.to === "/member"}
             className={({ isActive }) =>
-              isActive ? "font-semibold text-orange-500" : "hover:text-orange-500"
+              isActive
+                ? "font-semibold text-orange-500"
+                : "hover:text-orange-500"
             }
           >
             {link.label}

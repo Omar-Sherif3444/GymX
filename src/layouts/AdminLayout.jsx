@@ -1,0 +1,16 @@
+import { Routes, Route } from "react-router-dom";
+import AdminDashboard from "./../pages/admin/AdminDashboard";
+
+const AdminLayout = () => {
+  return (
+    <div className="flex min-h-screen">
+      <main className="flex-1 p-6">
+        <Routes>
+          <Route path="/" element={<AdminDashboard />} />
+        </Routes>
+      </main>
+    </div>
+  );
+};
+
+export default AdminLayout;
