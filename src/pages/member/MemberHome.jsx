@@ -1,12 +1,7 @@
-
-import MemberNavbar from "./member navbar/MemberNavbar";
-
 const MemberHome = () => {
   return (
-    <div>
-      <MemberNavbar />
-
-      <h1 className="text-3xl font-bold">Member Home</h1>
+    <div className="flex justify-center">
+      <h1 className="text-3xl font-bold pt-6">Member Home</h1>
     </div>
   );
 };
