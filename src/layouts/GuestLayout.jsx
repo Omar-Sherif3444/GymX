@@ -5,8 +5,11 @@ import Footer from "../components/Footer";
 import Landing from "../pages/public/Landing";
 import Login from "../pages/public/Login";
 import NotFound from "../pages/public/NotFound";
+import { useTheme } from "../context/ThemeContext";
 
 const GuestLayout = () => {
+  const { lightMode, setLightMode } = useTheme();
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
