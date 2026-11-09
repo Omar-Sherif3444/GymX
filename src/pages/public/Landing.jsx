@@ -1,4 +1,4 @@
-import "./Landing.css";
+import "./landing.css";
 const steps = [
   {
     number: "01",
@@ -263,8 +263,8 @@ const Landing = () => {
               <p className="gx-about-description">
                 GYMX connects neighborhood gyms with the members who make them
                 feel alive. One pass replaces paper cards, scattered messages,
-                and forgotten progress—so every visit feels simple, visible,
-                and worth coming back for.
+                and forgotten progress—so every visit feels simple, visible, and
+                worth coming back for.
               </p>
             </div>
 
@@ -309,8 +309,7 @@ const Landing = () => {
             <span className="gx-label">Ready when you are</span>
             <h2 className="gx-display">
               Ask your gym for
-              <br />
-              a GYMX pass.
+              <br />a GYMX pass.
             </h2>
           </div>
 
