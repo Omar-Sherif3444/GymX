@@ -9,6 +9,7 @@ import Store from "../pages/member/Store";
 import NotFound from "../pages/public/NotFound";
 
 import { useTheme } from "../context/ThemeContext";
+import MachineDescription from "../pages/member/machines/MachineDescription";
 
 const MemberLayout = () => {
   const { lightMode, setLightMode } = useTheme();
@@ -23,6 +24,10 @@ const MemberLayout = () => {
 
           <Route path="member-home" element={<MemberHome />} />
           <Route path="machines-guide" element={<MachinesGuide />} />
+          <Route
+            path="machines-guide/:machineId"
+            element={<MachineDescription />}
+          />
           <Route path="pass" element={<MemberPass />} />
           <Route path="history" element={<MemberHistory />} />
           <Route path="plans" element={<Plans />} />

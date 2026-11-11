@@ -1,13 +1,18 @@
-import MachineSearch from "./machines/MachineSearch";
 import MembersMachinesHero from "./machines/MembersMachinesHero";
 
+import MachinesLibrary from "./machines/MachinesLibrary";
+import { useMachinesData } from "./../../context/MachinesContext";
+
 const MachinesGuide = () => {
+  const { machines } = useMachinesData();
+
   return (
-    <main className="mx-2.5 mt-6">
+    <main className="mx-auto mt-6 w-full px-5 sm:px-8">
       {/* Hero */}
-      <MembersMachinesHero />
-      {/*Search & Scan Btn*/}
-      <MachineSearch />
+      <MembersMachinesHero machines={machines} />
+
+      {/* Equipment Library */}
+      <MachinesLibrary machines={machines} />
     </main>
   );
 };
