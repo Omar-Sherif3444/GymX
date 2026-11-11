@@ -1,4 +1,5 @@
 import StaffRow from "./StaffRow";
+import StaffCard from "./StaffCard";
 
 const headers = ["Name", "Role", "Contact", "Permissions", "Status", "Last active", "Actions"];
 
@@ -12,7 +13,13 @@ const StaffTable = ({ staff }) => {
   }
 
   return (
-    <div className="overflow-x-auto rounded-md border border-(--gym-line) bg-(--gym-card)">
+    <>
+    <div className="flex flex-col gap-3 md:hidden">
+      {staff.map((member) => (
+        <StaffCard key={member.id} member={member} />
+      ))}
+    </div>
+    <div className="hidden overflow-x-auto rounded-md border border-(--gym-line) bg-(--gym-card) md:block">
       <table className="w-full text-left text-sm">
         <thead className="text-xs uppercase text-(--gym-label)">
           <tr className="border-b border-(--gym-line)">
@@ -28,6 +35,7 @@ const StaffTable = ({ staff }) => {
         </tbody>
       </table>
     </div>
+    </>
   );
 };
 

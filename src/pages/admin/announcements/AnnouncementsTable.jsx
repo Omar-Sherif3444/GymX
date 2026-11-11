@@ -11,7 +11,25 @@ const AnnouncementsTable = ({ announcements }) => {
   }
 
   return (
-    <div className="overflow-x-auto rounded-md border border-(--gym-line) bg-(--gym-card)">
+    <>
+    <div className="flex flex-col gap-3 md:hidden">
+      {announcements.map((a) => (
+        <div key={a.id} className="rounded-md border border-(--gym-line) bg-(--gym-card) p-4 text-sm">
+          <div className="flex items-start justify-between gap-3">
+            <div className="font-semibold">{a.title}</div>
+            <span className="shrink-0 text-xs">{a.status}</span>
+          </div>
+          <div className="mt-1 text-xs text-(--gym-subtext)">
+            {a.audience} · {a.author}
+          </div>
+          <div className="mt-3 flex justify-between border-t border-(--gym-line) pt-3 text-xs text-(--gym-subtext)">
+            <span>Published: {a.publishDate}</span>
+            <span>Expires: {a.expiry}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+    <div className="hidden overflow-x-auto rounded-md border border-(--gym-line) bg-(--gym-card) md:block">
       <table className="w-full text-left text-sm">
         <thead className="text-xs uppercase text-(--gym-label)">
           <tr className="border-b border-(--gym-line)">
@@ -34,6 +52,7 @@ const AnnouncementsTable = ({ announcements }) => {
         </tbody>
       </table>
     </div>
+    </>
   );
 };
 

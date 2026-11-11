@@ -20,8 +20,8 @@ const Announcements = () => {
   );
 
   return (
-    <div className="p-8">
-      <h1 className="mb-6 font-[Anton] text-4xl uppercase">Announcements</h1>
+    <div className="md:p-8">
+      <h1 className="mb-6 font-[Anton] text-3xl uppercase sm:text-4xl">Announcements</h1>
       <AnnouncementsToolbar
         status={status}
         setStatus={setStatus}
