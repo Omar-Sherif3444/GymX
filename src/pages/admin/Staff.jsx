@@ -21,8 +21,8 @@ const Staff = () => {
   });
 
   return (
-    <div className="p-8">
-      <h1 className="mb-6 font-[Anton] text-4xl uppercase">Staff</h1>
+    <div className="md:p-8">
+      <h1 className="mb-6 font-[Anton] text-3xl uppercase sm:text-4xl">Staff</h1>
       <StaffToolbar search={search} setSearch={setSearch} role={role} setRole={setRole} />
       <StaffTable staff={filtered} />
     </div>

@@ -4,12 +4,12 @@ const statuses = ["All", "Draft", "Published", "Expired"];
 const audiences = ["All", "All members", "Premium plan", "Staff"];
 
 const selectClass =
-  "h-12 rounded-md border border-(--gym-line) bg-(--gym-card) px-4 text-sm text-(--gym-text) outline-none";
+  "h-12 flex-1 sm:flex-none rounded-md border border-(--gym-line) bg-(--gym-card) px-4 text-sm text-(--gym-text) outline-none";
 
 const AnnouncementsToolbar = ({ status, setStatus, audience, setAudience }) => {
   return (
     <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-      <label className="flex items-center gap-2 text-sm text-(--gym-subtext)">
+      <label className="flex items-center justify-between gap-2 text-sm text-(--gym-subtext)">
         Status
         <select value={status} onChange={(e) => setStatus(e.target.value)} className={selectClass}>
           {statuses.map((s) => (
@@ -18,7 +18,7 @@ const AnnouncementsToolbar = ({ status, setStatus, audience, setAudience }) => {
         </select>
       </label>
 
-      <label className="flex items-center gap-2 text-sm text-(--gym-subtext)">
+      <label className="flex items-center justify-between gap-2 text-sm text-(--gym-subtext)">
         Audience
         <select value={audience} onChange={(e) => setAudience(e.target.value)} className={selectClass}>
           {audiences.map((a) => (
