@@ -3,8 +3,9 @@ import { LuScanBarcode } from "react-icons/lu";
 
 const MachineSearch = () => {
   return (
-    <section className="my-6 flex w-full justify-center px-4">
-      <div className="flex w-full flex-col gap-3 sm:w-[90%] sm:flex-row md:w-[99%] lg:w-[80%] xl:w-[68%]">
+    <section className="my-5 flex w-full ">
+      <div className="flex w-full flex-col gap-3 sm:flex-row">
+        {" "}
         {/* Search input */}
         <div className="relative flex-1">
           <IoMdSearch className="absolute left-5 top-1/2 -translate-y-1/2 text-xl text-(--gym-subtext)" />
@@ -15,7 +16,6 @@ const MachineSearch = () => {
             className="h-12 w-full rounded-md border border-(--gym-line) bg-(--gym-card) pl-14 pr-4 font-[DM_Sans] text-sm text-(--gym-text) outline-none placeholder:text-(--gym-subtext) transition-colors focus:border-[#FF542E] sm:h-15"
           />
         </div>
-
         {/* Scan button */}
         <button
           type="button"

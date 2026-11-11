@@ -1,9 +1,9 @@
 import MachineCarousel from "./MachineCarousel";
 
-const MembersMachinesHero = () => {
+const MembersMachinesHero = ({ machines }) => {
   return (
-    <section className="flex w-full justify-center">
-      <div className="relative flex w-full max-w-7xl flex-col overflow-hidden rounded-md border border-(--gym-line) bg-(--gym-card) lg:min-h-177.5 lg:flex-row">
+    <section className=" w-full">
+      <div className="relative flex w-full flex-col overflow-hidden rounded-md border border-(--gym-line) bg-(--gym-card) lg:min-h-177.5 lg:flex-row">
         {/* Background image / carousel */}
         <div className="relative order-1 h-72 w-full sm:h-96 lg:absolute lg:inset-y-0 lg:right-0 lg:order-0 lg:h-auto lg:w-[52%]">
           <MachineCarousel />
@@ -56,7 +56,7 @@ const MembersMachinesHero = () => {
           <div className="flex flex-wrap gap-x-8 gap-y-5 sm:gap-x-10">
             <div className="flex min-w-20 flex-col gap-1">
               <span className="font-['Big_Shoulders_Display'] text-3xl font-bold text-[#FF5A1F]">
-                - -
+                {machines.length}
               </span>
               <span className="font-[Barlow] text-[9px] font-semibold uppercase tracking-widest text-(--gym-subtext)">
                 Machines
@@ -65,8 +65,12 @@ const MembersMachinesHero = () => {
 
             <div className="flex min-w-20 flex-col gap-1">
               <span className="font-['Big_Shoulders_Display'] text-3xl font-bold text-[#FF5A1F]">
-                - -
+                {
+                  machines.filter((machine) => machine.state === "working")
+                    .length
+                }
               </span>
+
               <span className="font-[Barlow] text-[9px] font-semibold uppercase tracking-widest text-(--gym-subtext)">
                 Available now
               </span>
