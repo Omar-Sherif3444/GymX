@@ -7,7 +7,7 @@ const MachinesGuide = () => {
   const { machines } = useMachinesData();
 
   return (
-    <main className="mx-auto mt-6 w-full px-5 sm:px-8">
+    <main className="mx-auto mt-6 w-full px-5 sm:px-8 mb-10">
       {/* Hero */}
       <MembersMachinesHero machines={machines} />
 
