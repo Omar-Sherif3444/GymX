@@ -1,7 +1,25 @@
 import { FiArrowLeft, FiInfo } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useMachinesData } from "../../../context/MachinesContext";
 
-const MachineDescription = () => {
+const MachineDescription = ({}) => {
+  const { machines } = useMachinesData();
+
+  const { machineId } = useParams();
+
+  const machineData = machines.find(
+    (machine) => String(machine.id) === machineId,
+  );
+
+  if (!machineData) {
+    return (
+      <section className="min-h-screen px-4 py-8">
+        <p>Machine not found.</p>
+        <Link to="/member/machines-guide">Back to machines</Link>
+      </section>
+    );
+  }
+
   return (
     <section className="min-h-screen bg-(--gym-bg) px-4 py-8 sm:px-6 lg:px-10">
       <div className="mx-auto max-w-7xl">
@@ -20,7 +38,7 @@ const MachineDescription = () => {
             {/* Machine image */}
             <div className="relative min-h-72 bg-(--gym-surface) sm:min-h-100">
               <img
-                src=""
+                src={machineData.image}
                 alt=""
                 className="absolute inset-0 h-full w-full object-cover"
               />
@@ -41,12 +59,12 @@ const MachineDescription = () => {
 
               {/* Machine title */}
               <h1 className="font-['Big_Shoulders_Display'] text-4xl font-bold uppercase text-(--gym-text) sm:text-5xl">
-                {/* Machine name */}
+                {machineData.name}
               </h1>
 
               {/* Description */}
               <p className="mt-4 font-[DM_Sans] text-sm leading-7 text-(--gym-subtext)">
-                {/* Machine description */}
+                {machineData.description}
               </p>
 
               {/* Machine details */}
@@ -56,7 +74,7 @@ const MachineDescription = () => {
                     Target muscles
                   </span>
                   <p className="mt-2 font-[DM_Sans] text-sm text-(--gym-text)">
-                    {/* Target muscles */}
+                    {machineData.muscle}
                   </p>
                 </div>
 
@@ -65,7 +83,7 @@ const MachineDescription = () => {
                     Difficulty
                   </span>
                   <p className="mt-2 font-[DM_Sans] text-sm text-(--gym-text)">
-                    {/* Difficulty */}
+                    {machineData.difficulty}
                   </p>
                 </div>
               </div>
@@ -93,9 +111,7 @@ const MachineDescription = () => {
             How to use
           </h2>
 
-          <div className="mt-6 space-y-4">
-            {/* Add your instructions here */}
-          </div>
+          <div className="mt-6 space-y-4">{machineData.howToUse}</div>
         </div>
 
         {/* Safety tips section */}
@@ -104,9 +120,7 @@ const MachineDescription = () => {
             Safety tips
           </h2>
 
-          <div className="mt-6 space-y-4">
-            {/* Add your safety tips here */}
-          </div>
+          <div className="mt-6 space-y-4">{machineData.safetyTips}</div>
         </div>
       </div>
     </section>
