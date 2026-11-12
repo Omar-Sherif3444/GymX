@@ -1,0 +1,38 @@
+export const announcementsData = [
+  {
+    id: 1,
+    title: "New cardio machines arrived",
+    audience: "All members",
+    author: "Omar Sherif",
+    publishDate: "Nov 5, 2026",
+    expiry: "Dec 5, 2026",
+    status: "Published",
+  },
+  {
+    id: 2,
+    title: "Gym closed on Friday for maintenance",
+    audience: "All members",
+    author: "Sara Adel",
+    publishDate: "Nov 12, 2026",
+    expiry: "Nov 14, 2026",
+    status: "Draft",
+  },
+  {
+    id: 3,
+    title: "Free PT session for Premium members",
+    audience: "Premium plan",
+    author: "Omar Sherif",
+    publishDate: "Oct 1, 2026",
+    expiry: "Oct 31, 2026",
+    status: "Expired",
+  },
+  {
+    id: 4,
+    title: "Staff meeting on Sunday",
+    audience: "Staff",
+    author: "Omar Sherif",
+    publishDate: "Nov 8, 2026",
+    expiry: "Nov 10, 2026",
+    status: "Published",
+  },
+];
