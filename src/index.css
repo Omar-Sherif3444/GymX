@@ -8,6 +8,101 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+
+@theme inline {
+    --font-display: Anton, Impact, "Arial Narrow", sans-serif;
+    --font-body: Barlow, system-ui, sans-serif;
+
+    --color-orange: #ff5a1f;
+    --color-coral: #ff3d4a;
+    --color-rose: #ff8fa3;
+
+    --color-bg: var(--bg);
+    --color-bg2: var(--bg2);
+    --color-card: var(--card);
+    --color-ink: var(--text);
+    --color-sub: var(--sub);
+    --color-label: var(--label);
+    --color-line: var(--line);
+    --color-track: var(--track);
+    --color-nav: var(--nav-text);
+}
+
+/* ---------- Theme variables (switched by data-theme on the layout wrapper) ---------- */
+[data-theme="dark"] {
+    --bg: #0b0d12;
+    --bg2: #10131a;
+    --card: #151821;
+    --text: #f4efea;
+    --sub: #c9c2bb;
+    --label: #ffb59e;
+    --line: rgba(255, 143, 163, 0.22);
+    --track: #242836;
+    --sh: none;
+    --hov: radial-gradient(circle 700px at 15% 40%, rgba(255, 61, 46, 0.32), transparent 65%),
+        linear-gradient(90deg, rgba(11, 13, 18, 0.9) 0%, rgba(11, 13, 18, 0.6) 50%, rgba(11, 13, 18, 0.22) 100%);
+    --nav-text: #f4efea;
+    --nav-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+}
+
+[data-theme="light"] {
+    --bg: #fff8f4;
+    --bg2: #ffefe8;
+    --card: #ffffff;
+    --text: #1a0b08;
+    --sub: #5c4a44;
+    --label: #d9411a;
+    --line: rgba(255, 143, 163, 0.35);
+    --track: #ffe3d8;
+    --sh: 0 4px 20px rgba(255, 90, 31, 0.08);
+    --hov: radial-gradient(circle 700px at 15% 40%, rgba(255, 143, 163, 0.45), transparent 65%),
+        linear-gradient(90deg, rgba(255, 248, 244, 0.94) 0%, rgba(255, 248, 244, 0.74) 50%, rgba(255, 248, 244, 0.3) 100%);
+    --nav-text: #1a0b08;
+    --nav-shadow: none;
+    color-scheme: light;
+}
+
+html {
+    scroll-behavior: smooth;
+    background: #0b0d12;
+}
+
+/* ---------- Brand utilities (things Tailwind can't express with a single class) ---------- */
+@utility bg-grad {
+    background: linear-gradient(135deg, #ff7a1a 0%, #ff3d2e 55%, #e5214a 100%);
+}
+
+@utility text-grad {
+    background: linear-gradient(135deg, #ff8a1f, #ff4a2a 45%, #e5214a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+@utility bg-hero-overlay {
+    background: var(--hov);
+}
+
+@utility bg-photo-overlay {
+    background: linear-gradient(180deg, transparent 50%, rgba(11, 13, 18, 0.6)),
+        linear-gradient(135deg, rgba(255, 90, 31, 0.16), transparent 55%);
+}
+
+@utility shadow-soft {
+    box-shadow: var(--sh);
+}
+
+@utility step-border {
+    border-top: 2px solid;
+    border-image: linear-gradient(90deg, #ff5a1f, #ff8fa3) 1;
+}
+
+@utility nav-shadow {
+    text-shadow: var(--nav-shadow);
+}
+
+
 /* for quick copy and pasting : */
 /* font-[Barlow] */
 /* font-[Anton] */

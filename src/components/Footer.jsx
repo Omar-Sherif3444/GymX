@@ -1,14 +1,14 @@
-import { Link } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
+import logoDark from "../assets/logo-dark.png";
+import logoLight from "../assets/logo-light.png";
 
-const Footer = () => {
+export default function Footer() {
+  const { theme } = useTheme();
+
   return (
-    <footer className="footer footer-center bg-base-200 p-6">
-      <Link to="/" className="text-xl font-bold">
-        GYM<span className="text-orange-500">X</span>
-      </Link>
-      <p>© {new Date().getFullYear()} GYMX. All rights reserved.</p>
+    <footer className="flex justify-between gap-2.5 border-t border-line px-7 py-[22px] text-xs text-sub">
+      <img src={theme === "dark" ? logoDark : logoLight} alt="GYM X" height={28} className="block h-7 w-auto" />
+      <span>Your gym, connected.</span>
     </footer>
   );
-};
-
-export default Footer;
+}
