@@ -13,35 +13,41 @@ Instead of being just an informational website, GymX aims to provide a complete 
 ## ✨ Key Features
 
 ### 👤 Member Accounts
+
 - Personal member accounts.
 - View subscription details and expiration dates.
 - Check the remaining subscription period.
 - Access a personal QR code.
 
 ### 📅 Attendance Tracking
+
 - View gym attendance history.
 - Track check-in and check-out times.
 - Keep attendance records organized.
 
 ### 🏋️ Equipment Guides
+
 - Display equipment available at each gym.
 - Explain the muscles targeted by each machine.
 - Provide instructions for correct equipment usage.
 - Explore different techniques and exercises.
 
 ### 🎮 Gamification & Rewards
+
 - Earn tokens by completing activities.
 - Participate in fitness challenges.
 - Introduce mini-games and side quests.
 - Reward members for their participation and achievements.
 
 ### 🤝 Private Gym Community
+
 - Interact with other gym members.
 - Share fitness achievements.
 - Participate in community challenges.
 - Post fitness-related content.
 
 ### ⚙️ Gym Customization
+
 - Customize the platform for each gym.
 - Display equipment and services specific to the gym.
 - Adapt the experience to the gym's needs and community.
@@ -73,6 +79,7 @@ Features and implementation details may evolve as development progresses.
 ## 🔮 Future Improvements
 
 Potential future enhancements include:
+
 - Advanced membership management tools.
 - QR-based attendance check-in.
 - Personalized fitness challenges.
