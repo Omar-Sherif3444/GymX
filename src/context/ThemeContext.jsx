@@ -2,16 +2,29 @@ import { createContext, useContext, useState } from "react";
 
 const ThemeContext = createContext(null);
 
-export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState("dark");
+export const ThemeProvider = ({ children }) => {
+  const [lightMode, setLightMode] = useState(false);
 
-  const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
+  const theme = {
+    "--gym-bg": lightMode ? "#FFF8F4" : "#0b0d12",
+    "--gym-surface": lightMode ? "#FFEFE8" : "#10131A",
+    "--gym-card": lightMode ? "#FFFFFF" : "#151821",
+    "--gym-text": lightMode ? "#1A0B08" : "#F4EFEA",
+    "--gym-subtext": lightMode ? "#5C4A44" : "#C9C2BB",
+    "--gym-line": lightMode ? "rgba(255,143,163,0.4)" : "#ff8fa338",
+    "--gym-label": lightMode ? "#D9411A" : "#FFB59E",
+  };
 
-  return <ThemeContext value={{ theme, toggleTheme }}>{children}</ThemeContext>;
-}
+  return (
+    <ThemeContext.Provider value={{ lightMode, setLightMode }}>
+      <div
+        style={theme}
+        className="min-h-screen bg-(--gym-bg) text-(--gym-text) transition-colors duration-300"
+      >
+        {children}
+      </div>
+    </ThemeContext.Provider>
+  );
+};
 
-export function useTheme() {
-  const ctx = useContext(ThemeContext);
-  if (!ctx) throw new Error("useTheme must be used inside <ThemeProvider>");
-  return ctx;
-}
+export const useTheme = () => useContext(ThemeContext);

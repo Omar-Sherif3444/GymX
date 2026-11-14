@@ -1,7 +1,9 @@
+import Header from "../../components/Header";
+
 const Login = () => {
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold">Login</h1>
+    <div className="p-8 flex justify-center items-center h-screen ">
+      <Header />{" "}
     </div>
   );
 };
