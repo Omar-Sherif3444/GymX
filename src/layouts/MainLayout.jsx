@@ -7,8 +7,10 @@ function ThemedShell() {
   const { theme } = useTheme();
 
   return (
-    <div data-theme={theme} className="min-h-screen bg-bg font-body leading-normal text-ink">
-      <Navbar />
+    <div
+      data-theme={theme}
+      className="min-h-screen bg-bg font-body leading-normal text-ink"
+    >
       <main>
         <Outlet />
       </main>

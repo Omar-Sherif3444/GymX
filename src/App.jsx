@@ -8,19 +8,21 @@ import PrivateLayout from "./layouts/PrivateLayout";
 import GuestLayout from "./layouts/GuestLayout";
 import MemberLayout from "./layouts/MemberLayout";
 import AdminLayout from "./layouts/AdminLayout";
+import Header from "./components/Header";
 
 const App = () => {
   return (
-    <ThemeProvider>
-      <Routes>
-        <Route element={<MainLayout />}>
-          <Route path="/" element={<Landing />} />
-        </Route>
-        <Route path="/member/*" element={<MemberLayout />} />
-        <Route path="/admin/*" element={<AdminLayout />} />
-        <Route path="/guest/*" element={<GuestLayout />} />
-      </Routes>
-    </ThemeProvider>
+    <main>
+      <ThemeProvider>
+        <Routes>
+          <Route element={<PrivateLayout />}>
+            <Route path="/member/*" element={<MemberLayout />} />
+            <Route path="/admin/*" element={<AdminLayout />} />
+          </Route>
+          <Route path="/*" element={<GuestLayout />} />
+        </Routes>
+      </ThemeProvider>
+    </main>
   );
 };
 
