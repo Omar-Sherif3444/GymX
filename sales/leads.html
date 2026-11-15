@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GymX Admin - Leads</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .view-toggle { display: flex; background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 3px; }
+  .view-toggle button { border: none; background: transparent; padding: 7px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--muted); }
+  .view-toggle button.active { background: var(--dark); color: #fff; }
+
+  .pipeline { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; align-items: start; }
+  .column { background: #ebe8e1; border-radius: 16px; padding: 12px; min-height: 480px; }
+  .col-head { display: flex; justify-content: space-between; align-items: center; padding: 4px 6px 12px; }
+  .col-head b { font-size: 14px; }
+  .count { background: #fff; border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 700; }
+  .col-bar { height: 3px; border-radius: 3px; margin: 0 6px 12px; }
+
+  .lead {
+    background: #fff; border: 1px solid var(--border); border-radius: 12px;
+    padding: 14px; margin-bottom: 10px; cursor: grab;
+    transition: transform .15s, box-shadow .15s;
+  }
+  .lead:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,.12); border-color: var(--orange); }
+  .lead.overdue { border-color: #f3b8b2; background: #fffafa; }
+  .lead-name { font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+  .lead-meta { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+  .lead-foot { display: flex; justify-content: space-between; align-items: center; }
+  .owner { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+  .mini-avatar { width: 24px; height: 24px; border-radius: 50%; background: var(--dark); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .date-tag { font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 8px; background: #eceae4; color: #555; }
+  .date-tag.late { background: var(--red-bg); color: var(--red); }
+  .date-tag.soon { background: var(--amber-bg); color: var(--amber); }
+  .source { display: inline-block; font-size: 11px; background: #f1efe9; padding: 2px 8px; border-radius: 6px; margin-bottom: 8px; }
+
+  .empty {
+    border: 2px dashed #cfcbc1; border-radius: 12px; padding: 40px 14px;
+    text-align: center; color: var(--muted); font-size: 13px;
+  }
+  .empty .icon { font-size: 28px; margin-bottom: 8px; }
+  .add-lead { width: 100%; border: 1px dashed #b9b5aa; background: transparent; border-radius: 10px; padding: 9px; font-size: 13px; color: var(--muted); cursor: pointer; }
+  .add-lead:hover { background: #fff; color: var(--text); }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="gym-box">
+    <div class="gym-logo">IC</div>
+    <div><b>Iron Club</b><span>Gym admin</span></div>
+  </div>
+  <nav class="nav">
+    <a href="#">Dashboard</a>
+    <a href="#">Members</a>
+    <a href="#">Equipment</a>
+    <a href="store.html">Store</a>
+    <a href="leads.html" class="active">Leads (CRM)</a>
+  </nav>
+  <div class="powered">Powered by GYM X</div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div>
+      <h1>Leads</h1>
+      <p>Track potential members from first contact to signing up.</p>
+    </div>
+    <div class="actions">
+      <div class="view-toggle">
+        <button class="active" id="v-board" onclick="setView('board')">Pipeline</button>
+        <button id="v-table" onclick="setView('table')">Table</button>
+      </div>
+      <input class="input" placeholder="Search leads">
+      <button class="btn btn-primary">+ Add lead</button>
+    </div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi">
+      <div class="label">Total leads</div>
+      <div class="value">64</div>
+      <div class="sub">Across all stages</div>
+    </div>
+    <div class="kpi">
+      <div class="label">New this week</div>
+      <div class="value">11</div>
+      <div class="sub">+3 vs last week</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Conversion rate</div>
+      <div class="value">23%</div>
+      <div class="sub">+2% this month</div>
+    </div>
+    <div class="kpi dark">
+      <div class="label">Follow-ups due</div>
+      <div class="value" style="color:#ff5a1f">6</div>
+      <div class="sub" style="color:#ff9b73">2 overdue</div>
+    </div>
+  </div>
+
+  <!-- PIPELINE VIEW -->
+  <div id="board" class="pipeline">
+
+    <div class="column">
+      <div class="col-head"><b>New</b><span class="count">3</span></div>
+      <div class="col-bar" style="background:#6b6b6b"></div>
+
+      <div class="lead">
+        <div class="lead-name">Mahmoud Fathy</div>
+        <span class="source">Instagram</span>
+        <div class="lead-foot">
+          <div class="owner"><div class="mini-avatar">MK</div>Mona</div>
+          <span class="date-tag soon">Today</span>
+        </div>
+      </div>
+      <div class="lead">
+        <div class="lead-name">Hana Sherif</div>
+        <span class="source">Walk-in</span>
+        <div class="lead-foot">
+          <div class="owner"><div class="mini-avatar">KA</div>Karim</div>
+          <span class="date-tag">25 Oct</span>
+        </div>
+      </div>
+      <div class="lead">
+        <div class="lead-name">Ziad Mansour</div>
+        <span class="source">Referral</span>
+        <div class="lead-foot">
+          <div class="owner"><div class="mini-avatar">MK</div>Mona</div>
+          <span class="date-tag">26 Oct</span>
+        </div>
+      </div>
+      <button class="add-lead">+ Add lead</button>
+    </div>
+
+    <div class="column">
+      <div class="col-head"><b>Contacted</b><span class="count">2</span></div>
+      <div class="col-bar" style="background:#1d4ed8"></div>
+
+      <div class="lead overdue">
+        <div class="lead-name">Rana Ibrahim</div>
+        <span class="source">Facebook</span>
+        <div class="lead-foot">
+          <div class="owner"><div class="mini-avatar">KA</div>Karim</div>
+          <span class="date-tag late">Overdue · 20 Oct</span>
+        </div>
+      </div>
+      <div class="lead">
+        <div class="lead-name">Tarek Nabil</div>
+        <span class="source">Instagram</span>
+        <div class="lead-foot">
+          <div class="owner"><div class="mini-avatar">MK</div>Mona</div>
+          <span class="date-tag">27 Oct</span>
+        </div>
+      </div>
+      <button class="add-lead">+ Add lead</button>
+    </div>
+
+    <div class="column">
+      <div class="col-head"><b>Visited</b><span class="count">2</span></div>
+      <div class="col-bar" style="background:#a15c00"></div>
+
+      <div class="lead">
+        <div class="lead-name">Dina Hossam</div>
+        <span class="source">Walk-in</span>
+        <div class="lead-foot">
+          <div class="owner"><div class="mini-avatar">HA</div>Hany</div>
+          <span class="date-tag soon">Tomorrow</span>
+        </div>
+      </div>
+      <div class="lead overdue">
+        <div class="lead-name">Adham Samy</div>
+        <span class="source">Referral</span>
+        <div class="lead-foot">
+          <div class="owner"><div class="mini-avatar">KA</div>Karim</div>
+          <span class="date-tag late">Overdue · 21 Oct</span>
+        </div>
+      </div>
+      <button class="add-lead">+ Add lead</button>
+    </div>
+
+    <div class="column">
+      <div class="col-head"><b>Negotiation</b><span class="count">1</span></div>
+      <div class="col-bar" style="background:#ff5a1f"></div>
+
+      <div class="lead">
+        <div class="lead-name">Laila Emad</div>
+        <span class="source">Instagram</span>
+        <div class="lead-foot">
+          <div class="owner"><div class="mini-avatar">HA</div>Hany</div>
+          <span class="date-tag soon">Today</span>
+        </div>
+      </div>
+      <button class="add-lead">+ Add lead</button>
+    </div>
+
+    <div class="column">
+      <div class="col-head"><b>Converted</b><span class="count">0</span></div>
+      <div class="col-bar" style="background:#1a7f46"></div>
+
+      <div class="empty">
+        <div class="icon">🏆</div>
+        No converted leads yet.<br>Drag a lead here once they sign up.
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLE VIEW -->
+  <div id="table" class="card hidden">
+    <table>
+      <thead>
+        <tr><th>Name</th><th>Source</th><th>Stage</th><th>Owner</th><th>Next follow-up</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><b>Mahmoud Fathy</b></td><td>Instagram</td><td><span class="badge b-gray">New</span></td><td>Mona</td><td><span class="badge b-amber">Today</span></td></tr>
+        <tr><td><b>Hana Sherif</b></td><td>Walk-in</td><td><span class="badge b-gray">New</span></td><td>Karim</td><td>25 Oct</td></tr>
+        <tr><td><b>Rana Ibrahim</b></td><td>Facebook</td><td><span class="badge b-blue">Contacted</span></td><td>Karim</td><td><span class="badge b-red">Overdue · 20 Oct</span></td></tr>
+        <tr><td><b>Dina Hossam</b></td><td>Walk-in</td><td><span class="badge b-amber">Visited</span></td><td>Hany</td><td><span class="badge b-amber">Tomorrow</span></td></tr>
+        <tr><td><b>Adham Samy</b></td><td>Referral</td><td><span class="badge b-amber">Visited</span></td><td>Karim</td><td><span class="badge b-red">Overdue · 21 Oct</span></td></tr>
+        <tr><td><b>Laila Emad</b></td><td>Instagram</td><td><span class="badge b-blue">Negotiation</span></td><td>Hany</td><td><span class="badge b-amber">Today</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<script>
+function setView(v) {
+  document.getElementById('board').classList.toggle('hidden', v !== 'board');
+  document.getElementById('table').classList.toggle('hidden', v !== 'table');
+  document.getElementById('v-board').classList.toggle('active', v === 'board');
+  document.getElementById('v-table').classList.toggle('active', v === 'table');
+}
+</script>
+</body>
+</html>

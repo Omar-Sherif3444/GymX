@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GymX Admin - Order Details</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .back { color: var(--muted); text-decoration: none; font-size: 14px; display: inline-block; margin-bottom: 10px; }
+  .back:hover { color: var(--text); }
+  .title-row { display: flex; align-items: center; gap: 14px; }
+  .demo { display: flex; gap: 6px; margin-bottom: 20px; align-items: center; font-size: 12px; color: var(--muted); }
+  .demo .tab { border: 1px solid var(--border); background: #fff; padding: 7px 14px; font-size: 13px; }
+  .grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+  .stack { display: flex; flex-direction: column; gap: 20px; }
+  .card h3 { font-size: 16px; margin-bottom: 14px; }
+  .row { display: flex; justify-content: space-between; padding: 9px 0; font-size: 14px; border-top: 1px solid var(--border); }
+  .row:first-of-type { border-top: none; }
+  .row span:first-child { color: var(--muted); }
+  .member { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .avatar { width: 46px; height: 46px; border-radius: 50%; background: var(--orange); font-weight: 800; display: flex; align-items: center; justify-content: center; }
+  .totals { margin-top: 14px; border-top: 2px solid var(--border); padding-top: 12px; }
+  .totals .row { border: none; padding: 5px 0; }
+  .totals .grand { font-size: 18px; font-weight: 800; }
+  .banner { padding: 14px 18px; border-radius: 12px; margin-bottom: 20px; font-size: 14px; font-weight: 600; }
+  .actions-bar { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="gym-box">
+    <div class="gym-logo">IC</div>
+    <div><b>Iron Club</b><span>Gym admin</span></div>
+  </div>
+  <nav class="nav">
+    <a href="#">Dashboard</a>
+    <a href="#">Members</a>
+    <a href="#">Equipment</a>
+    <a href="store.html" class="active">Store</a>
+    <a href="leads.html">Leads (CRM)</a>
+  </nav>
+  <div class="powered">Powered by GYM X</div>
+</aside>
+
+<main class="main">
+  <a class="back" href="store.html">← Back to Store</a>
+
+  <div class="topbar">
+    <div>
+      <div class="title-row">
+        <h1>Order #1042</h1>
+        <span id="status-badge" class="badge"></span>
+      </div>
+      <p>Placed on 23 Oct 2026 · 6:15 PM</p>
+    </div>
+    <div class="actions-bar">
+      <button class="btn" onclick="window.print()">Print</button>
+      <button class="btn btn-danger" id="btn-cancel">Cancel order</button>
+      <button class="btn btn-primary" id="btn-pickup">Mark as picked up</button>
+    </div>
+  </div>
+
+  <div class="demo">
+    <span>Preview state:</span>
+    <button class="tab" onclick="setState('pending')">Pending</button>
+    <button class="tab" onclick="setState('ready')">Ready</button>
+    <button class="tab" onclick="setState('picked')">Picked up</button>
+    <button class="tab" onclick="setState('cancelled')">Cancelled</button>
+  </div>
+
+  <div id="banner" class="banner hidden"></div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Items</h3>
+      <table>
+        <thead>
+          <tr><th>Item</th><th>Price</th><th>Qty</th><th>Total</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="product"><div class="thumb">🥛</div><b>Whey Protein 2kg</b></div></td>
+            <td>1,450 EGP</td><td>1</td><td>1,450 EGP</td>
+          </tr>
+          <tr>
+            <td><div class="product"><div class="thumb">💧</div><b>Water Bottle 1L</b></div></td>
+            <td>180 EGP</td><td>2</td><td>360 EGP</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="totals">
+        <div class="row"><span>Subtotal</span><span>1,810 EGP</span></div>
+        <div class="row"><span>Member discount</span><span>-90 EGP</span></div>
+        <div class="row grand"><span>Total</span><span>1,720 EGP</span></div>
+      </div>
+    </div>
+
+    <div class="stack">
+      <div class="card">
+        <h3>Member</h3>
+        <div class="member">
+          <div class="avatar">YA</div>
+          <div><b>Youssef Adel</b><br><span style="color:var(--muted);font-size:13px">0101 234 5678</span></div>
+        </div>
+        <div class="row"><span>Plan</span><span>3-Month Plan</span></div>
+        <div class="row"><span>Member ID</span><span>GX-00412</span></div>
+      </div>
+
+      <div class="card">
+        <h3>Payment</h3>
+        <div class="row"><span>Status</span><span id="pay-badge" class="badge"></span></div>
+        <div class="row"><span>Method</span><span id="pay-method">Cash at desk</span></div>
+        <div class="row"><span>Amount</span><span>1,720 EGP</span></div>
+      </div>
+
+      <div class="card">
+        <h3>Pickup</h3>
+        <div class="row"><span>Status</span><span id="pickup-text"></span></div>
+        <div class="row"><span>Location</span><span>Front desk</span></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+const states = {
+  pending:   { badge: ['b-amber', 'Pending'],          pay: ['b-amber', 'Unpaid'], pickup: 'Preparing order',        banner: null,                                  pickupBtn: false, cancelBtn: true  },
+  ready:     { badge: ['b-blue',  'Ready for pickup'], pay: ['b-green', 'Paid'],   pickup: 'Waiting at front desk',  banner: ['b-blue',  'Order is ready. Member can collect it from the front desk.'], pickupBtn: true,  cancelBtn: true  },
+  picked:    { badge: ['b-gray',  'Picked up'],        pay: ['b-green', 'Paid'],   pickup: 'Picked up 23 Oct, 7:10 PM', banner: ['b-green', 'Order completed. Picked up by the member.'],           pickupBtn: false, cancelBtn: false },
+  cancelled: { badge: ['b-red',   'Cancelled'],        pay: ['b-gray',  'Refunded'], pickup: 'Cancelled',            banner: ['b-red',   'This order was cancelled. Payment has been refunded.'],  pickupBtn: false, cancelBtn: false }
+};
+
+function setState(key) {
+  const s = states[key];
+  const sb = document.getElementById('status-badge');
+  sb.className = 'badge ' + s.badge[0];
+  sb.textContent = s.badge[1];
+
+  const pb = document.getElementById('pay-badge');
+  pb.className = 'badge ' + s.pay[0];
+  pb.textContent = s.pay[1];
+
+  document.getElementById('pickup-text').textContent = s.pickup;
+
+  const banner = document.getElementById('banner');
+  if (s.banner) {
+    banner.className = 'banner ' + s.banner[0];
+    banner.textContent = s.banner[1];
+  } else {
+    banner.className = 'banner hidden';
+  }
+
+  document.getElementById('btn-pickup').disabled = !s.pickupBtn;
+  document.getElementById('btn-cancel').disabled = !s.cancelBtn;
+}
+
+setState('ready');
+</script>
+</body>
+</html>
