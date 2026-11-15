@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GymX Admin - Store</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="gym-box">
+    <div class="gym-logo">IC</div>
+    <div><b>Iron Club</b><span>Gym admin</span></div>
+  </div>
+  <nav class="nav">
+    <a href="#">Dashboard</a>
+    <a href="#">Members</a>
+    <a href="#">Equipment</a>
+    <a href="store.html" class="active">Store</a>
+    <a href="leads.html">Leads (CRM)</a>
+  </nav>
+  <div class="powered">Powered by GYM X</div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div>
+      <h1>Store</h1>
+      <p>Manage gym shop products and pickup orders.</p>
+    </div>
+    <div class="actions">
+      <input class="input" placeholder="Search products or orders">
+      <button class="btn btn-primary">+ Add product</button>
+    </div>
+  </div>
+
+  <div class="kpis three">
+    <div class="kpi">
+      <div class="label">Sales this month</div>
+      <div class="value">48,250 EGP</div>
+      <div class="sub">+12% vs last month</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Orders</div>
+      <div class="value">86</div>
+      <div class="sub">9 waiting for pickup</div>
+    </div>
+    <div class="kpi dark">
+      <div class="label">Low stock</div>
+      <div class="value" style="color:#ff5a1f">5</div>
+      <div class="sub" style="color:#ff9b73">Restock soon</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="tabs">
+      <button class="tab active" id="tab-products" onclick="showTab('products')">Products</button>
+      <button class="tab" id="tab-orders" onclick="showTab('orders')">Orders</button>
+    </div>
+
+    <div id="products">
+      <table>
+        <thead>
+          <tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th></th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="product"><div class="thumb">🥛</div><b>Whey Protein 2kg</b></div></td>
+            <td>Supplements</td><td>1,450 EGP</td><td>34 units</td>
+            <td><span class="badge b-green">In stock</span></td>
+            <td><button class="btn btn-sm">Edit</button></td>
+          </tr>
+          <tr>
+            <td><div class="product"><div class="thumb">⚡</div><b>Creatine 300g</b></div></td>
+            <td>Supplements</td><td>780 EGP</td><td>4 units</td>
+            <td><span class="badge b-amber">Low stock</span></td>
+            <td><button class="btn btn-sm">Edit</button></td>
+          </tr>
+          <tr>
+            <td><div class="product"><div class="thumb">💧</div><b>Water Bottle 1L</b></div></td>
+            <td>Accessories</td><td>180 EGP</td><td>52 units</td>
+            <td><span class="badge b-green">In stock</span></td>
+            <td><button class="btn btn-sm">Edit</button></td>
+          </tr>
+          <tr>
+            <td><div class="product"><div class="thumb">🧤</div><b>Lifting Gloves</b></div></td>
+            <td>Accessories</td><td>320 EGP</td><td>0 units</td>
+            <td><span class="badge b-red">Out of stock</span></td>
+            <td><button class="btn btn-sm">Restock</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="orders" style="display:none">
+      <table>
+        <thead>
+          <tr><th>Order ID</th><th>Member</th><th>Items</th><th>Total</th><th>Payment</th><th>Pickup</th><th>Date</th><th></th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>#1042</b></td><td>Youssef Adel</td><td>Whey Protein 2kg</td><td>1,450 EGP</td>
+            <td><span class="badge b-green">Paid</span></td>
+            <td><span class="badge b-blue">Ready for pickup</span></td>
+            <td>23 Oct</td>
+            <td><a href="order-details.html"><button class="btn btn-sm">View</button></a></td>
+          </tr>
+          <tr>
+            <td><b>#1041</b></td><td>Salma Fawzy</td><td>Water Bottle x2</td><td>360 EGP</td>
+            <td><span class="badge b-amber">Unpaid</span></td>
+            <td><span class="badge b-blue">Ready for pickup</span></td>
+            <td>23 Oct</td>
+            <td><a href="order-details.html"><button class="btn btn-sm">View</button></a></td>
+          </tr>
+          <tr>
+            <td><b>#1040</b></td><td>Karim Tarek</td><td>Creatine 300g</td><td>780 EGP</td>
+            <td><span class="badge b-green">Paid</span></td>
+            <td><span class="badge b-gray">Picked up</span></td>
+            <td>22 Oct</td>
+            <td><a href="order-details.html"><button class="btn btn-sm">View</button></a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<script>
+function showTab(name) {
+  document.getElementById('products').style.display = name === 'products' ? 'block' : 'none';
+  document.getElementById('orders').style.display = name === 'orders' ? 'block' : 'none';
+  document.getElementById('tab-products').classList.toggle('active', name === 'products');
+  document.getElementById('tab-orders').classList.toggle('active', name === 'orders');
+}
+</script>
+</body>
+</html>
