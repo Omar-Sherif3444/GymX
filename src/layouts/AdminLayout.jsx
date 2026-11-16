@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import AdminDashboard from "./../pages/admin/AdminDashboard";
 import Staff from "./../pages/admin/Staff";
 import Announcements from "./../pages/admin/Announcements";
+import AnnouncementEditor from "./../pages/admin/AnnouncementEditor";
 import { useTheme } from "../context/ThemeContext";
 import StaffContext from "../context/StaffContext";
 import AnnouncementsContext from "../context/AnnouncementsContext";
@@ -31,6 +32,14 @@ const AdminLayout = () => {
                 <Route path="/" element={<AdminDashboard />} />
                 <Route path="/staff" element={<Staff />} />
                 <Route path="/announcements" element={<Announcements />} />
+                <Route
+                  path="/announcements/new"
+                  element={<AnnouncementEditor />}
+                />
+                <Route
+                  path="/announcements/:id/edit"
+                  element={<AnnouncementEditor />}
+                />
                 <Route path="/members" element={<MembersDirectory />} />
                 <Route path="/members/new" element={<NewMember />} />
                 <Route path="/members/:id" element={<MemberDetails />} />
