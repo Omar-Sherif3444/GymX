@@ -4,14 +4,11 @@ import {
   LuUsers,
   LuScanLine,
   LuDumbbell,
-  LuTrophy,
   LuShoppingBag,
-  LuMessageSquare,
   LuFilter,
   LuFileText,
   LuChartNoAxesColumnIncreasing,
   LuUser,
-  LuSettings,
 } from "react-icons/lu";
 import { useTheme } from "../../context/ThemeContext";
 import logoDark from "../../assets/logo-dark.png";
@@ -24,14 +21,11 @@ const links = [
   { to: "/members", label: "Members", icon: LuUsers },
   { to: "/check-in", label: "Check-in", icon: LuScanLine },
   { to: "/machines", label: "Machines", icon: LuDumbbell },
-  { to: "/challenges", label: "Challenges & Rewards", icon: LuTrophy },
   { to: "/store", label: "Store", icon: LuShoppingBag },
-  { to: "/community", label: "Community", icon: LuMessageSquare },
   { to: "/leads", label: "Leads", icon: LuFilter },
   { to: "/announcements", label: "Announcements", icon: LuFileText },
   { to: "/reports", label: "Reports", icon: LuChartNoAxesColumnIncreasing },
   { to: "/staff", label: "Staff", icon: LuUser },
-  { to: "/settings", label: "Settings", icon: LuSettings },
 ];
 
 export default function AdminSidebar() {
@@ -39,7 +33,6 @@ export default function AdminSidebar() {
 
   return (
     <aside className="sticky top-0 flex h-screen w-16 shrink-0 flex-col border-r border-line bg-bg p-2 lg:w-60 lg:p-3">
-      {/* Logo */}
       <div className="flex items-center justify-center gap-3 py-4 lg:justify-start lg:px-3">
         <img
           src={lightMode ? logoLight : logoDark}
@@ -48,7 +41,6 @@ export default function AdminSidebar() {
         />
       </div>
 
-      {/* Links */}
       <nav className="mt-4 flex-1 space-y-1 overflow-y-auto">
         {links.map(({ to, label, icon: Icon }) => (
           <NavLink
@@ -69,7 +61,6 @@ export default function AdminSidebar() {
         ))}
       </nav>
 
-      {/* User */}
       <div className="flex items-center justify-center gap-3 border-t border-line pt-4 lg:justify-start lg:px-3">
         <span className="grid size-8 shrink-0 place-items-center rounded-full bg-bg2 text-xs font-bold text-ink">
           A
