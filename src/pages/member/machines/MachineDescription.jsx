@@ -2,9 +2,8 @@ import { FiArrowLeft, FiInfo } from "react-icons/fi";
 import { Link, useParams } from "react-router-dom";
 import { useMachinesData } from "../../../context/MachinesContext";
 
-const MachineDescription = ({}) => {
+const MachineDescription = () => {
   const { machines } = useMachinesData();
-
   const { machineId } = useParams();
 
   const machineData = machines.find(
@@ -13,9 +12,11 @@ const MachineDescription = ({}) => {
 
   if (!machineData) {
     return (
-      <section className="min-h-screen px-4 py-8">
-        <p>Machine not found.</p>
-        <Link to="/member/machines-guide">Back to machines</Link>
+      <section className="min-h-screen bg-(--gym-bg) px-4 py-8">
+        <p className="text-(--gym-text)">Machine not found.</p>
+        <Link to="/member/machines-guide" className="text-(--gym-label)">
+          Back to machines
+        </Link>
       </section>
     );
   }
@@ -26,7 +27,7 @@ const MachineDescription = ({}) => {
         {/* Back navigation */}
         <Link
           to="/member/machines-guide"
-          className="mb-6 inline-flex items-center gap-2 font-[DM_Sans] text-sm font-semibold text-(--gym-subtext) transition-colors hover:text-[#FF5A1F]"
+          className="mb-6 inline-flex items-center gap-2 font-[DM_Sans] text-sm font-semibold text-(--gym-subtext) transition-colors hover:text-(--gym-label)"
         >
           <FiArrowLeft />
           Back to machines
@@ -39,11 +40,11 @@ const MachineDescription = ({}) => {
             <div className="relative min-h-72 bg-(--gym-surface) sm:min-h-100">
               <img
                 src={machineData.image}
-                alt=""
+                alt={machineData.name}
                 className="absolute inset-0 h-full w-full object-cover"
               />
 
-              {/* Optional image overlay */}
+              {/* Image overlay */}
               <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent" />
             </div>
 
@@ -53,7 +54,7 @@ const MachineDescription = ({}) => {
               <div className="mb-5 flex items-center gap-2">
                 <span className="h-2.5 w-2.5 rounded-full bg-green-500" />
                 <span className="font-[Barlow] text-xs font-bold uppercase tracking-widest text-(--gym-subtext)">
-                  {/* Machine status */}
+                  Machine status
                 </span>
               </div>
 
@@ -74,6 +75,7 @@ const MachineDescription = ({}) => {
                     Target muscles
                   </span>
                   <p className="mt-2 font-[DM_Sans] text-sm text-(--gym-text)">
+                    {" "}
                     {machineData.muscle}
                   </p>
                 </div>
@@ -90,16 +92,14 @@ const MachineDescription = ({}) => {
 
               {/* Additional information */}
               <div className="mt-8 border-t border-(--gym-line) pt-6">
-                <div className="mb-3 flex items-center gap-2 text-[#FF5A1F]">
+                <div className="mb-3 flex items-center gap-2 text-(--gym-label)">
                   <FiInfo />
                   <h2 className="font-[Barlow] text-sm font-bold uppercase tracking-widest">
                     Important information
                   </h2>
                 </div>
 
-                <p className="font-[DM_Sans] text-sm leading-7 text-(--gym-subtext)">
-                  {/* Additional machine information */}
-                </p>
+                <p className="font-[DM_Sans] text-sm leading-7 text-(--gym-subtext)"></p>
               </div>
             </div>
           </div>

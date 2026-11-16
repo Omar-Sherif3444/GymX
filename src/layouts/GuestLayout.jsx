@@ -6,13 +6,14 @@ import Landing from "../pages/public/Landing";
 import Login from "../pages/public/Login";
 import NotFound from "../pages/public/NotFound";
 import { useTheme } from "../context/ThemeContext";
+import Navbar from "../components/Navbar";
 
 const GuestLayout = () => {
   const { lightMode, setLightMode } = useTheme();
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header />
+    <main className="flex min-h-screen flex-col">
+      <Navbar lightMode={lightMode} />
 
       <div className="flex-1">
         <Routes>
@@ -23,7 +24,7 @@ const GuestLayout = () => {
       </div>
 
       <Footer />
-    </div>
+    </main>
   );
 };
 
