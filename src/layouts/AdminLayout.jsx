@@ -9,28 +9,38 @@ import MembersDirectory from "./../pages/admin/MembersDirectory";
 import NewMember from "./../pages/admin/NewMember";
 import MemberDetails from "./../pages/admin/MemberDetails";
 import RegistrationSuccess from "./../pages/admin/RegistrationSuccess";
+import AdminNavbar from "../components/admin/AdminNavbar";
+import AdminSidebar from "../components/admin/AdminSidebar";
 
 const AdminLayout = () => {
-  const { lightMode, setLightMode } = useTheme();
+  const { lightMode } = useTheme();
 
   return (
     <StaffContext>
       <AnnouncementsContext>
-        <div className="flex min-h-screen">
-          <main className="min-w-0 flex-1 p-4 sm:p-6">
-            <Routes>
-              <Route path="/" element={<AdminDashboard />} />
-              <Route path="/staff" element={<Staff />} />
-              <Route path="/announcements" element={<Announcements />} />
-              <Route path="/members" element={<MembersDirectory />} />
-              <Route path="/members/new" element={<NewMember />} />
-              <Route path="/members/:id" element={<MemberDetails />} />
-              <Route
-                path="/members/:id/registered"
-                element={<RegistrationSuccess />}
-              />
-            </Routes>
-          </main>
+        <div
+          data-theme={lightMode ? "light" : "dark"}
+          className="flex min-h-screen bg-bg text-ink"
+        >
+          <AdminSidebar />
+          <div className="flex min-w-0 flex-1 flex-col">
+            <AdminNavbar />
+
+            <main className="min-w-0 flex-1 p-4 sm:p-6">
+              <Routes>
+                <Route path="/" element={<AdminDashboard />} />
+                <Route path="/staff" element={<Staff />} />
+                <Route path="/announcements" element={<Announcements />} />
+                <Route path="/members" element={<MembersDirectory />} />
+                <Route path="/members/new" element={<NewMember />} />
+                <Route path="/members/:id" element={<MemberDetails />} />
+                <Route
+                  path="/members/:id/registered"
+                  element={<RegistrationSuccess />}
+                />
+              </Routes>
+            </main>
+          </div>
         </div>
       </AnnouncementsContext>
     </StaffContext>
