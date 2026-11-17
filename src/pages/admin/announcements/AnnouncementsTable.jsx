@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 const headers = ["Title", "Audience", "Author", "Publish date", "Expiry", "Status"];
 
@@ -16,7 +17,9 @@ const AnnouncementsTable = ({ announcements }) => {
       {announcements.map((a) => (
         <div key={a.id} className="rounded-md border border-(--gym-line) bg-(--gym-card) p-4 text-sm">
           <div className="flex items-start justify-between gap-3">
-            <div className="font-semibold">{a.title}</div>
+            <Link to={`${a.id}/edit`} className="font-semibold hover:text-[#FF542E]">
+              {a.title}
+            </Link>
             <span className="shrink-0 text-xs">{a.status}</span>
           </div>
           <div className="mt-1 text-xs text-(--gym-subtext)">
@@ -41,7 +44,11 @@ const AnnouncementsTable = ({ announcements }) => {
         <tbody>
           {announcements.map((a) => (
             <tr key={a.id} className="border-b border-(--gym-line) hover:bg-(--gym-surface)">
-              <td className="p-4 font-semibold">{a.title}</td>
+              <td className="p-4 font-semibold">
+                <Link to={`${a.id}/edit`} className="hover:text-[#FF542E]">
+                  {a.title}
+                </Link>
+              </td>
               <td className="p-4">{a.audience}</td>
               <td className="p-4 text-(--gym-subtext)">{a.author}</td>
               <td className="p-4 text-(--gym-subtext)">{a.publishDate}</td>

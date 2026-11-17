@@ -1,7 +1,12 @@
+import { Link } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
+import {
+  announcementStatuses,
+  announcementAudiences,
+} from "../../../context/announcementsData";
 
-const statuses = ["All", "Draft", "Published", "Expired"];
-const audiences = ["All", "All members", "Premium plan", "Staff"];
+const statuses = ["All", ...announcementStatuses];
+const audiences = ["All", ...announcementAudiences];
 
 const selectClass =
   "h-12 flex-1 sm:flex-none rounded-md border border-(--gym-line) bg-(--gym-card) px-4 text-sm text-(--gym-text) outline-none";
@@ -27,9 +32,12 @@ const AnnouncementsToolbar = ({ status, setStatus, audience, setAudience }) => {
         </select>
       </label>
 
-      <button className="flex h-12 items-center justify-center gap-2 rounded-md bg-[#FF542E] px-6 text-sm font-semibold text-white hover:opacity-90 sm:ml-auto">
+      <Link
+        to="new"
+        className="flex h-12 items-center justify-center gap-2 rounded-md bg-[#FF542E] px-6 text-sm font-semibold text-white hover:opacity-90 sm:ml-auto"
+      >
         <FiPlus /> New announcement
-      </button>
+      </Link>
     </div>
   );
 };
