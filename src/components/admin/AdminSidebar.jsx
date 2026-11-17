@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
   LuLayoutDashboard,
   LuUsers,
@@ -33,16 +33,16 @@ export default function AdminSidebar() {
 
   return (
     <aside className="sticky top-0 flex h-screen w-16 shrink-0 flex-col border-r border-line bg-bg p-2 lg:w-60 lg:p-3">
-
       <div className="flex items-center justify-center gap-3 py-4 lg:justify-start lg:px-3">
-        <img
-          src={lightMode ? logoLight : logoDark}
-          alt="GymX"
-          className="h-15 w-15 shrink-0 object-contain lg:h-14 lg:w-auto"
-        />
+        <Link to="/">
+          <img
+            src={lightMode ? logoLight : logoDark}
+            alt="GymX"
+            className="h-15 w-15 shrink-0 object-contain lg:h-14 lg:w-auto"
+          />
+        </Link>
       </div>
 
-     
       <nav className="mt-4 flex-1 space-y-1 overflow-y-auto">
         {links.map(({ to, label, icon: Icon }) => (
           <NavLink
@@ -63,7 +63,6 @@ export default function AdminSidebar() {
         ))}
       </nav>
 
-      
       <div className="flex items-center justify-center gap-3 border-t border-line pt-4 lg:justify-start lg:px-3">
         <span className="grid size-8 shrink-0 place-items-center rounded-full bg-bg2 text-xs font-bold text-ink">
           A

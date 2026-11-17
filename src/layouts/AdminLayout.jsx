@@ -12,6 +12,7 @@ import MemberDetails from "./../pages/admin/MemberDetails";
 import RegistrationSuccess from "./../pages/admin/RegistrationSuccess";
 import AdminNavbar from "../components/admin/AdminNavbar";
 import AdminSidebar from "../components/admin/AdminSidebar";
+import Reports from "../pages/admin/Reports";
 
 const AdminLayout = () => {
   const { lightMode } = useTheme();
@@ -47,6 +48,7 @@ const AdminLayout = () => {
                   path="/members/:id/registered"
                   element={<RegistrationSuccess />}
                 />
+                <Route path="/reports" element={<Reports />} />
               </Routes>
             </main>
           </div>

@@ -13,14 +13,13 @@ export default function AdminNavbar() {
   const outlineBtn =
     "rounded-lg border border-line px-3 py-2 text-xs text-start font-semibold text-ink transition hover:bg-bg2";
 
-  
   const actions = (
     <>
       <Link to="/admin/check-in" onClick={closeMenu} className={outlineBtn}>
         Scan check-in
       </Link>
       <Link
-        to="/admin/announcements"
+        to="/admin/announcements/new"
         onClick={closeMenu}
         className={outlineBtn}
       >
@@ -46,19 +45,16 @@ export default function AdminNavbar() {
 
   return (
     <header className="sticky top-0 z-10 border-b border-line bg-bg/90 backdrop-blur">
-     
       <div className="flex items-center gap-3 px-4 py-3 sm:px-6">
         <input
           placeholder="Search name, phone, or membership no."
           className="min-w-0 max-w-md flex-1 rounded-lg border border-line bg-card px-3 py-2 text-sm text-ink outline-none placeholder:text-sub focus:border-line"
         />
 
-        
         <div className="ml-auto hidden items-center gap-2 md:flex">
           {actions}
         </div>
 
-        {/* Mobile menu button */}
         <button
           className={`${outlineBtn} ml-auto md:hidden`}
           onClick={() => setOpen((o) => !o)}
@@ -68,7 +64,6 @@ export default function AdminNavbar() {
         </button>
       </div>
 
-      {/* Mobile dropdown panel */}
       {open && (
         <div className="flex flex-col justify-start gap-2 border-t border-line bg-bg px-4 py-3 md:hidden">
           {actions}
