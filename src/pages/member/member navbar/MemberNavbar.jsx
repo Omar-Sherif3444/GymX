@@ -71,7 +71,7 @@ const MemberNavbar = ({ setLightMode, lightMode }) => {
                 }`}
               >
                 <span
-                  className={`h-3 w-3 rounded-full bg-[#FF5A1F] transition-transform duration-300 ${
+                  className={`h-3 w-3 rounded-full bg-orange transition-transform duration-300 ${
                     lightMode ? "translate-x-4" : "translate-x-0"
                   }`}
                 />

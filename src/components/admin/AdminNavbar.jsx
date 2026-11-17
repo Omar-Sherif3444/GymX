@@ -19,7 +19,7 @@ export default function AdminNavbar() {
         Scan check-in
       </Link>
       <Link
-        to="/admin/announcements"
+        to="/admin/announcements/new"
         onClick={closeMenu}
         className={outlineBtn}
       >
