@@ -1,4 +1,4 @@
-import { CHALLENGE } from "../../data/landing";
+import { CHALLENGE } from "../../data/landingData";
 import { Card, Display, Label, PhotoCard, Wrap } from "../ui";
 import challengesImg from "../../assets/challenges.jpg";
 
@@ -16,26 +16,29 @@ export default function Challenges({ ref }) {
             <br />
             Get rewarded.
           </Display>
-          <p className="mb-[18px] max-w-[420px] text-sm text-sub">
+          <p className="mb-[18px] max-w-[420px] text-sm text-(--lp-sub)">
             Join gym-wide challenges, track your streak, and earn tokens for rewards chosen by your gym.
           </p>
 
           <Card>
             <div className="flex items-center justify-between gap-2">
-              <Label className="!text-sub">Active challenge</Label>
-              <Label className="!text-rose">
+              <Label className="text-(--lp-sub)!">Active challenge</Label>
+              <Label className="text-(--lp-rose)!">
                 {day} / {totalDays} days
               </Label>
             </div>
             <Display as="h3" size="text-[26px]" className="mb-1 mt-3">
               {title}
             </Display>
-            <div className="my-2.5 h-1.5 overflow-hidden rounded-[3px] bg-track">
-              <div className="h-full bg-linear-to-r from-orange to-rose" style={{ width: `${progress}%` }} />
+            <div className="my-2.5 h-1.5 overflow-hidden rounded-[3px] bg-(--lp-track)">
+              <div
+                className="h-full bg-linear-to-r from-(--lp-orange) to-(--lp-rose)"
+                style={{ width: `${progress}%` }}
+              />
             </div>
             <div className="flex items-center justify-between gap-2">
-              <small className="text-[11px] text-sub">DAY {day}</small>
-              <Label className="!text-rose">{reward}</Label>
+              <small className="text-[11px] text-(--lp-sub)">DAY {day}</small>
+              <Label className="text-(--lp-rose)!">{reward}</Label>
             </div>
           </Card>
         </div>
