@@ -7,9 +7,8 @@ import Machines from "../../components/landing/Machines";
 import Challenges from "../../components/landing/Challenges";
 import About from "../../components/landing/About";
 import CtaBanner from "../../components/landing/CtaBanner";
-import Footer from "../../components/Footer";
 
-export default function Landing() {
+export default function LandingPage() {
   const { hash } = useLocation();
 
   // React refs (no getElementById): each section registers itself under its hash name.
@@ -33,7 +32,6 @@ export default function Landing() {
       <Challenges ref={register("challenges")} />
       <About ref={register("about")} />
       <CtaBanner />
-      <Footer />
     </>
   );
 }
