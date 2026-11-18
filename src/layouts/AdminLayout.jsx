@@ -6,6 +6,8 @@ import AnnouncementEditor from "./../pages/admin/AnnouncementEditor";
 import { useTheme } from "../context/ThemeContext";
 import StaffContext from "../context/StaffContext";
 import AnnouncementsContext from "../context/AnnouncementsContext";
+import CheckInsContext from "../context/CheckInsContext";
+import CheckIn from "./../pages/admin/CheckIn";
 import MembersDirectory from "./../pages/admin/MembersDirectory";
 import NewMember from "./../pages/admin/NewMember";
 import MemberDetails from "./../pages/admin/MemberDetails";
@@ -20,6 +22,7 @@ const AdminLayout = () => {
   return (
     <StaffContext>
       <AnnouncementsContext>
+        <CheckInsContext>
         <div
           data-theme={lightMode ? "light" : "dark"}
           className="flex min-h-screen bg-bg text-ink"
@@ -30,22 +33,23 @@ const AdminLayout = () => {
 
             <main className="min-w-0 flex-1 p-4 sm:p-6">
               <Routes>
-                <Route path="/" element={<AdminDashboard />} />
-                <Route path="/staff" element={<Staff />} />
-                <Route path="/announcements" element={<Announcements />} />
+                <Route index element={<AdminDashboard />} />
+                <Route path="check-in" element={<CheckIn />} />
+                <Route path="staff" element={<Staff />} />
+                <Route path="announcements" element={<Announcements />} />
                 <Route
-                  path="/announcements/new"
+                  path="announcements/new"
                   element={<AnnouncementEditor />}
                 />
                 <Route
-                  path="/announcements/:id/edit"
+                  path="announcements/:id/edit"
                   element={<AnnouncementEditor />}
                 />
-                <Route path="/members" element={<MembersDirectory />} />
-                <Route path="/members/new" element={<NewMember />} />
-                <Route path="/members/:id" element={<MemberDetails />} />
+                <Route path="members" element={<MembersDirectory />} />
+                <Route path="members/new" element={<NewMember />} />
+                <Route path="members/:id" element={<MemberDetails />} />
                 <Route
-                  path="/members/:id/registered"
+                  path="members/:id/registered"
                   element={<RegistrationSuccess />}
                 />
                 <Route path="/reports" element={<Reports />} />
@@ -53,6 +57,7 @@ const AdminLayout = () => {
             </main>
           </div>
         </div>
+        </CheckInsContext>
       </AnnouncementsContext>
     </StaffContext>
   );
