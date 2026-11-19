@@ -1,9 +1,15 @@
 import { Link } from "react-router-dom";
 import { card, cardLabel, cardTitle } from "./DashboardCard";
 
-const NeedsAttention = ({ expiring, underMaintenance }) => {
-  const attentionItems = expiring + underMaintenance;
-  const attentionQueues = (expiring > 0) + (underMaintenance > 0);
+const row =
+  "flex items-center gap-3 text-xs border-b border-line pb-3 last:border-0";
+const count =
+  "grid size-7 shrink-0 place-items-center rounded-md bg-bg2 font-bold text-orange";
+
+const NeedsAttention = ({ expiring, underMaintenance, rejected }) => {
+  const attentionItems = expiring + underMaintenance + rejected;
+  const attentionQueues =
+    (expiring > 0) + (underMaintenance > 0) + (rejected > 0);
 
   return (
     <section className={card}>
@@ -13,10 +19,8 @@ const NeedsAttention = ({ expiring, underMaintenance }) => {
       </h2>
 
       <ul className="space-y-3">
-        <li className="flex items-center gap-3 border-b border-line pb-3 text-xs last:border-0">
-          <span className="grid size-7 shrink-0 place-items-center rounded-md bg-bg2 font-bold text-orange">
-            {expiring}
-          </span>
+        <li className={row}>
+          <span className={count}>{expiring}</span>
           <span className="flex-1">Subscriptions expiring within 7 days</span>
           <Link
             to="/admin/members"
@@ -25,11 +29,18 @@ const NeedsAttention = ({ expiring, underMaintenance }) => {
             Renew
           </Link>
         </li>
-
-        <li className="flex items-center gap-3 text-xs border-b border-line pb-3 last:border-0">
-          <span className="grid size-7 shrink-0 place-items-center rounded-md bg-bg2 font-bold text-orange">
-            {underMaintenance}
-          </span>
+        <li className={row}>
+          <span className={count}>{rejected}</span>
+          <span className="flex-1">Rejected check-ins today</span>
+          <Link
+            to="/admin/check-in"
+            className="font-display uppercase text-orange"
+          >
+            Review
+          </Link>
+        </li>
+        <li className={row}>
+          <span className={count}>{underMaintenance}</span>
           <span className="flex-1">Machines under maintenance</span>
           <Link
             to="/admin/machines"

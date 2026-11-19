@@ -2,8 +2,11 @@ import { useState } from "react";
 import { LuSearch } from "react-icons/lu";
 import { useTheme } from "../../../context/ThemeContext";
 import { getStatus, todayISO, daysBetween } from "../members/membersApi";
+import { useCheckInsData } from "../../../context/CheckInsContext";
+import { insideNow, codeOf } from "./InGymAndCheckIn";
 
 const FILTER = ["All", "Active", "Expiring"];
+
 const columns = [
   "Member",
   "Checked-In",
@@ -20,19 +23,33 @@ const statusLight = {
 };
 
 const statusDark = {
-  Active: " bg-green-900/50 text-green-400",
-  Expired: " bg-red-900/50 text-red-400",
+  Active: "bg-green-900/50 text-green-400",
+  Expired: "bg-red-900/50 text-red-400",
   Expiring: "bg-yellow-900/50 text-yellow-400",
 };
 
 const DashboardTable = ({ members, loading, error }) => {
   const { lightMode } = useTheme();
-  const statusColor = lightMode ? statusLight : statusDark;
+  const { checkIns, setCheckIns } = useCheckInsData();
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState("All");
-  const [checkedOut, setCheckedOut] = useState([]);
 
-  const today = "2026-11-17";
+  const statusColor = lightMode ? statusLight : statusDark;
+  const today = todayISO();
+
+  const rows = insideNow(checkIns).map((visit) => {
+    const member = members.find((m) => m.id === codeOf(visit));
+    return { visit, member, status: member ? getStatus(member) : null };
+  });
+
+  const visible = rows
+    .filter((r) => filter === "All" || r.status === filter)
+    .filter((r) => r.visit.name.toLowerCase().includes(query.toLowerCase()));
+
+  const handleCheckOut = (visit) =>
+    setCheckIns(
+      checkIns.map((c) => (c.id === visit.id ? { ...c, checkedOut: true } : c)),
+    );
 
   const filterBtn = (name) =>
     `btn btn-md rounded-full border ${
@@ -40,17 +57,12 @@ const DashboardTable = ({ members, loading, error }) => {
         ? "border-orange bg-orange text-white"
         : "border-line bg-card text-sub"
     }`;
-  const visible = members
-    .filter((m) => getStatus(m) !== "Expired" && getStatus(m) !== "Frozen")
-    .filter((m) => m.attendance.some((v) => v.date === today))
-    .filter((m) => filter === "All" || getStatus(m) === filter)
-    .filter((m) => m.name.toLowerCase().includes(query.toLowerCase()));
 
   return (
     <div className="min-w-0">
-      <h1 className="mb-2 text-lg font-display uppercase">
+      <h2 className="mb-2 text-lg font-display uppercase">
         in the gym now - {visible.length}
-      </h1>
+      </h2>
 
       <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center">
         <label className="input w-full rounded-md border border-(--gym-line) focus-within:border-orange focus-within:outline-none sm:flex-1">
@@ -81,7 +93,7 @@ const DashboardTable = ({ members, loading, error }) => {
 
       <div className="overflow-hidden rounded-lg border border-(--gym-line) bg-card">
         <div className="max-h-80 overflow-auto">
-          <table className="table ">
+          <table className="table">
             <thead>
               <tr className="font-bold text-label">
                 {columns.map((col) => (
@@ -94,33 +106,31 @@ const DashboardTable = ({ members, loading, error }) => {
                 ))}
               </tr>
             </thead>
+
             <tbody>
-              {visible.map((m) => {
-                const status = getStatus(m);
-                return (
-                  <tr key={m.id} className=" hover:bg-(--gym-surface)">
-                    <td className="hover:text-orange">{m.name}</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>
-                      <span
-                        className={`rounded-full px-3 py-1 text-sm font-semibold ${statusColor[status]}`}
-                      >
-                        {status}
-                      </span>
-                    </td>
-                    <td>{daysBetween(today, m.endDate)}</td>
-                    <td>
-                      <button
-                        onClick={() => setCheckedOut([...checkedOut, m.id])}
-                        className="btn btn-sm btn-outline border-line hover:bg-orange"
-                      >
-                        Check-Out
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
+              {visible.map(({ visit, member, status }) => (
+                <tr key={visit.id} className="hover:bg-(--gym-surface)">
+                  <td className="hover:text-orange">{visit.name}</td>
+                  <td>{visit.time}</td>
+                  <td>-</td>
+                  <td>
+                    <span
+                      className={`rounded-full px-3 py-1 text-sm font-semibold ${statusColor[status]}`}
+                    >
+                      {status}
+                    </span>
+                  </td>
+                  <td>{member ? daysBetween(today, member.endDate) : "-"}</td>
+                  <td>
+                    <button
+                      onClick={() => handleCheckOut(visit)}
+                      className="btn btn-sm btn-outline border-line hover:bg-orange"
+                    >
+                      Check-Out
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
@@ -136,4 +146,5 @@ const DashboardTable = ({ members, loading, error }) => {
     </div>
   );
 };
+
 export default DashboardTable;

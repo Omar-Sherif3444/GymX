@@ -1,75 +1,51 @@
 import { useEffect, useState } from "react";
 import { useMachinesData } from "../../context/MachinesContext";
-import { revenueTotal } from "../../data/reportsData";
-import { getMembers, getStatus, todayISO, addDays } from "./members/membersApi";
+import { getMembers, todayISO } from "./members/membersApi";
+import { useCheckInsData } from "../../context/CheckInsContext";
+import useDashboardStats from "./dashboard/useDashboardStats";
 import DashboardTable from "./dashboard/DashboardTable";
 import NeedsAttention from "./dashboard/NeedsAttention";
 import MachinesStatus from "./dashboard/MachinesStatus";
 import RecentActivity from "./dashboard/RecentActivity";
+import LoadState from "./members/LoadState";
 
 const AdminDashboard = () => {
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { machines } = useMachinesData();
+  const { checkIns } = useCheckInsData();
+  const { expiring, underMaintenance, rejected, cards } = useDashboardStats(
+    members,
+    machines,
+    checkIns,
+  );
+  const today = todayISO();
 
-  useEffect(() => {
+  const loadMembers = () => {
+    setLoading(true);
+    setError(null);
     getMembers()
       .then(setMembers)
       .catch(setError)
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    loadMembers();
   }, []);
 
-  const today = "2026-11-17";
-  const expiring = members.filter((m) => getStatus(m) === "Expiring").length;
-  const underMaintenance = machines.filter(
-    (m) => m.state === "under maintenance",
-  ).length;
-
-  //will add the checked-out filter later
-  const inGym = members
-    .filter((m) => m.attendance.some((v) => v.date === today))
-    .filter((m) => getStatus(m) !== "Frozen").length;
-
-  const cards = [
-    {
-      label: "In The Gym Now",
-      value: `${inGym} / 60`,
-      info: `${Math.round((inGym / 60) * 100)}% full `,
-      infoColor: "(--gym-subtext)",
-    },
-
-    {
-      label: "Check-Ins Today",
-      //only using the inGym bec they have the same code will change it later
-      value: inGym,
-    },
-
-    {
-      label: "Expiring",
-      value: expiring,
-      info: "Expires within 7 days",
-      infoColor: "yellow-400",
-    },
-    {
-      label: "New Members",
-      value: members.filter((m) => m.joinDate >= addDays(today, -30)).length,
-      info: "↑ 2 vs yesterday",
-      infoColor: "green-400",
-    },
-    {
-      label: "Maintenance",
-      value: underMaintenance,
-      info: "In Maintenance",
-      infoColor: "(--gym-subtext)",
-    },
-    {
-      label: "Revenue - EGP",
-      value: revenueTotal,
-      info: "↑ 8.4% vs Oct",
-      infoColor: "green-400",
-    },
-  ];
+  if (loading || error) {
+    return (
+      <div className="md:p-8">
+        <h1 className="font-[Anton] text-4xl mb-5">DASHBOARD</h1>
+        <LoadState
+          error={error ? error.message || "Couldn't load members." : null}
+          onRetry={loadMembers}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="md:p-8">
@@ -83,7 +59,7 @@ const AdminDashboard = () => {
           >
             <p className="stat-title text-label font-bold">{c.label}</p>
             <p className=" font-[Anton] mt-4 text-3xl ">{c.value}</p>
-            <p className={`text-xs mt-1 text-${c.infoColor}`}>{c.info}</p>
+            <p className={`text-xs mt-1 ${c.infoColor}`}>{c.info}</p>
           </div>
         ))}
       </div>
@@ -93,6 +69,7 @@ const AdminDashboard = () => {
           <NeedsAttention
             expiring={expiring}
             underMaintenance={underMaintenance}
+            rejected={rejected}
           />
           <RecentActivity members={members} />
           <MachinesStatus machines={machines} />
