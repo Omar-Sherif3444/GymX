@@ -23,7 +23,7 @@ const MachinesCard = ({ machine }) => {
   const currentStatus = status[machine.state] || status.working;
 
   return (
-    <article className="flex w-full flex-col overflow-hidden rounded-md border border-(--gym-line) bg-(--gym-card) transition-colors hover:border-[#FF5A1F]/60">
+    <article className="flex w-full flex-col overflow-hidden rounded-md border border-(--gym-line) bg-(--gym-card) transition-colors hover:border-orange/60">
       {/* Card Header */}
       <div className="flex h-14 items-center justify-between border-b border-(--gym-line) px-5">
         <span className="font-[Barlow] text-xs font-semibold tracking-wider text-(--gym-subtext)">
@@ -96,7 +96,7 @@ const MachinesCard = ({ machine }) => {
         ) : (
           <Link
             to={`/member/machines-guide/${machine.id}`}
-            className="flex h-14 items-center justify-between px-5 font-[DM_Sans] text-xs font-bold text-[#FF5A1F] transition-colors hover:bg-[#FF5A1F]/10"
+            className="flex h-14 items-center justify-between px-5 font-[DM_Sans] text-xs font-bold text-orange transition-colors hover:bg-orange/10"
           >
             <span>View Details</span>
             <FiArrowUpRight className="text-lg" />

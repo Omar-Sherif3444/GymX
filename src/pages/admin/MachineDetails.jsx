@@ -1,8 +1,162 @@
+import { FiArrowLeft, FiInfo } from "react-icons/fi";
+import { Link, useParams } from "react-router-dom";
+import { useMachinesData } from "../../context/MachinesContext";
+
 const MachineDetails = () => {
+  const { machines, machinesLoading, machinesError } = useMachinesData();
+  const { id } = useParams();
+
+  const machineData = machines.find((machine) => String(machine.id) === id);
+
+  if (machinesLoading) {
+    return (
+      <section className="min-h-screen bg-(--gym-bg) px-4 py-8">
+        <p className="font-[Barlow] text-(--gym-subtext)">
+          Loading machine details...
+        </p>
+      </section>
+    );
+  }
+
+  if (machinesError) {
+    return (
+      <section className="min-h-screen bg-(--gym-bg) px-4 py-8">
+        <p className="font-[Barlow] text-red-500">{machinesError}</p>
+        <Link
+          to="/member/machines-guide"
+          className="mt-4 inline-block font-[Barlow] font-semibold text-(--gym-label)"
+        >
+          Back to machines
+        </Link>
+      </section>
+    );
+  }
+
+  if (!machineData) {
+    return (
+      <section className="min-h-screen bg-(--gym-bg) px-4 py-8">
+        <p className="font-[Barlow] text-(--gym-text)">Machine not found.</p>
+        <Link
+          to="/admin/machines"
+          className="mt-3 inline-block font-[Barlow] font-semibold text-(--gym-label) hover:underline"
+        >
+          Back to machines
+        </Link>
+      </section>
+    );
+  }
+
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold">Machine Details</h1>
-    </div>
+    <section className="min-h-screen bg-(--gym-bg) px-4 py-6 sm:px-6 sm:py-8 lg:px-10">
+      <div className="mx-auto max-w-7xl">
+        {/* Back navigation */}
+        <Link
+          to="/member/machines-guide"
+          className="mb-6 inline-flex items-center gap-2 font-[Barlow] text-sm font-semibold text-(--gym-subtext) transition-colors hover:text-(--gym-label)"
+        >
+          <FiArrowLeft />
+          Back to machines
+        </Link>
+
+        {/* Machine card */}
+        <div className="overflow-hidden rounded-2xl border border-(--gym-line) bg-(--gym-card) shadow-lg">
+          <div className="grid grid-cols-1 lg:grid-cols-2">
+            {/* Machine image */}
+            <div className="relative min-h-64 bg-(--gym-surface) sm:min-h-80 lg:min-h-105">
+              <img
+                src={machineData.image}
+                alt={machineData.name}
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+
+              {/* Image overlay */}
+              <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent" />
+            </div>
+
+            {/* Machine information */}
+            <div className="flex flex-col p-5 sm:p-8 lg:p-10">
+              {/* Status */}
+              <div className="mb-5 flex items-center gap-2">
+                <span className="h-2.5 w-2.5 rounded-full bg-green-500" />
+                <span className="font-[Barlow] text-xs font-bold uppercase tracking-widest text-(--gym-subtext)">
+                  Machine status
+                </span>
+              </div>
+
+              {/* Machine title */}
+              <h1 className="font-[Big_Shoulders_Display] text-4xl font-bold uppercase text-(--gym-text) sm:text-5xl lg:text-6xl">
+                {machineData.name}
+              </h1>
+
+              {/* Description */}
+              <p className="mt-4 font-[Barlow] text-sm leading-7 text-(--gym-subtext) sm:text-base">
+                {machineData.description}
+              </p>
+
+              {/* Machine details */}
+              <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+                <div className="rounded-xl border border-(--gym-line) bg-(--gym-surface) p-4">
+                  <span className="font-[Barlow] text-xs font-semibold uppercase tracking-wider text-(--gym-label)">
+                    Target muscles
+                  </span>
+                  <p className="mt-2 font-[Barlow] text-sm text-(--gym-text)">
+                    {Array.isArray(machineData.muscle)
+                      ? machineData.muscle.join(", ")
+                      : machineData.muscle}
+                  </p>
+                </div>
+
+                <div className="rounded-xl border border-(--gym-line) bg-(--gym-surface) p-4">
+                  <span className="font-[Barlow] text-xs font-semibold uppercase tracking-wider text-(--gym-label)">
+                    Difficulty
+                  </span>
+                  <p className="mt-2 font-[Barlow] text-sm text-(--gym-text)">
+                    {machineData.difficulty}
+                  </p>
+                </div>
+              </div>
+
+              {/* Additional information */}
+              <div className="mt-8 border-t border-(--gym-line) pt-6">
+                <div className="mb-3 flex items-center gap-2 text-(--gym-label)">
+                  <FiInfo />
+                  <h2 className="font-[Barlow] text-sm font-bold uppercase tracking-widest">
+                    Important information
+                  </h2>
+                </div>
+
+                <p className="font-[Barlow] text-sm leading-7 text-(--gym-subtext)">
+                  {machineData.importantInformation ||
+                    "Follow the instructions and maintain proper form while using this machine."}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Instructions section */}
+        <div className="mt-6 rounded-2xl border border-(--gym-line) bg-(--gym-card) p-5 sm:mt-8 sm:p-8">
+          <h2 className="font-[Big_Shoulders_Display] text-3xl font-bold uppercase text-(--gym-text) sm:text-4xl">
+            How to use
+          </h2>
+
+          <div className="mt-6 space-y-4 font-[Barlow] text-sm leading-7 text-(--gym-subtext) sm:text-base">
+            {machineData.howToUse}
+          </div>
+        </div>
+
+        {/* Safety tips section */}
+        <div className="mt-6 rounded-2xl border border-(--gym-line) bg-(--gym-card) p-5 sm:p-8">
+          <h2 className="font-[Big_Shoulders_Display] text-3xl font-bold uppercase text-(--gym-text) sm:text-4xl">
+            Safety tips
+          </h2>
+
+          <div className="mt-6 space-y-4 font-[Barlow] text-sm leading-7 text-(--gym-subtext) sm:text-base">
+            {machineData.safetyTips}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 

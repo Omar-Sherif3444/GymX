@@ -13,13 +13,14 @@ export const ThemeProvider = ({ children }) => {
     "--gym-subtext": lightMode ? "#5C4A44" : "#C9C2BB",
     "--gym-line": lightMode ? "rgba(255,143,163,0.4)" : "#ff8fa338",
     "--gym-label": lightMode ? "#D9411A" : "#FFB59E",
+    "--gym-gradiante": lightMode ? "line" : "",
   };
 
   return (
     <ThemeContext.Provider value={{ lightMode, setLightMode }}>
       <div
         style={theme}
-        className="min-h-screen bg-(--gym-bg) text-(--gym-text) transition-colors duration-300"
+        className="min-h-screen bg-(--gym-bg) bg-linear- text-(--gym-text) transition-colors duration-300"
       >
         {children}
       </div>

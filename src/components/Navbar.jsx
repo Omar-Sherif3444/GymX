@@ -13,12 +13,17 @@ export default function LandingNavbar() {
   const isActive = (item) => pathname === "/" && item.activeFor.includes(hash);
 
   return (
-    <header className="[text-shadow:var(--lp-nav-shadow)] sticky top-0 z-50 -mb-[62px] flex items-center justify-between gap-3 px-7 py-3.5 text-(--lp-nav) backdrop-blur-sm">
+    <header className="text-shadow:(--lp-nav-shadow) sticky top-0 z-50 -mb-15.5 flex items-center justify-between gap-3 px-7 py-3.5 text-(--lp-nav) backdrop-blur-sm">
       <Link to="/">
-        <img src={theme === "dark" ? logoDark : logoLight} alt="GYM X" height={36} className="block h-9 w-auto" />
+        <img
+          src={theme === "dark" ? logoDark : logoLight}
+          alt="GYM X"
+          height={36}
+          className="block h-9 w-auto"
+        />
       </Link>
 
-      <nav className="hidden gap-[26px] text-[13px] font-medium md:flex">
+      <nav className="hidden gap-6.5 text-[13px] font-medium md:flex">
         {NAV_ITEMS.map((item) => (
           <Link
             key={item.label}
@@ -34,7 +39,7 @@ export default function LandingNavbar() {
         <button
           type="button"
           onClick={toggleTheme}
-          className="cursor-pointer rounded-md border border-(--lp-line) px-3 py-[5px] text-xs font-medium text-(--lp-sub)"
+          className="cursor-pointer rounded-md border border-(--lp-line) px-3 py-1.25 text-xs font-medium text-(--lp-sub)"
         >
           {theme === "dark" ? "Light mode" : "Dark mode"}
         </button>
