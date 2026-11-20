@@ -1,14 +1,9 @@
 import { Routes, Route } from "react-router-dom";
-import MainLayout from "./layouts/MainLayout";
-import Navbar from "./components/Navbar";
-import Landing from "./pages/public/Landing";
-import Footer from "./components/Footer";
 import { ThemeProvider } from "./context/ThemeContext";
 import PrivateLayout from "./layouts/PrivateLayout";
 import GuestLayout from "./layouts/GuestLayout";
 import MemberLayout from "./layouts/MemberLayout";
 import AdminLayout from "./layouts/AdminLayout";
-import Header from "./components/Header";
 
 const App = () => {
   return (

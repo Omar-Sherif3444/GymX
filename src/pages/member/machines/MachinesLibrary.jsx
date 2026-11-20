@@ -3,7 +3,7 @@ import { machineFilters } from "../../../context/machineData";
 import MachinesCard from "./MachinesCard";
 import MachineSearch from "./MachineSearch";
 
-const MachinesLibrary = ({ machines }) => {
+const MachinesLibrary = ({ machines, machinesLoading, machinesError }) => {
   const [activeFilter, setActiveFilter] = useState("all");
 
   // Filter machines based on selected category
@@ -52,8 +52,8 @@ const MachinesLibrary = ({ machines }) => {
             onClick={() => setActiveFilter(category.value)}
             className={`rounded-full border px-4 py-2.5 font-[DM_Sans] text-xs font-semibold transition-colors ${
               activeFilter === category.value
-                ? "border-[#FF5A1F] bg-[#FF5A1F] text-white"
-                : "border-(--gym-line) bg-transparent text-(--gym-text) hover:border-[#FF5A1F] hover:text-[#FF5A1F]"
+                ? "border-orange bg-orange text-white"
+                : "border-(--gym-line) bg-transparent text-(--gym-text) hover:border-orange hover:text-orange"
             }`}
           >
             {category.label}
@@ -62,15 +62,19 @@ const MachinesLibrary = ({ machines }) => {
       </div>
 
       {/* Machines Cards */}
-      <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {filteredMachines.length > 0 ? (
-          filteredMachines.map((machine) => (
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {machinesLoading ? (
+          Array.from({ length: 8 }).map((_, index) => (
+            <MachinesCardSkeleton key={index} />
+          ))
+        ) : machinesError ? (
+          <p className="col-span-full text-center font-[Barlow] text-red-500">
+            {machinesError}
+          </p>
+        ) : (
+          machines.map((machine) => (
             <MachinesCard key={machine.id} machine={machine} />
           ))
-        ) : (
-          <p className="col-span-full py-10 text-center font-[Barlow] text-(--gym-subtext)">
-            No machines found in this category.
-          </p>
         )}
       </div>
     </section>

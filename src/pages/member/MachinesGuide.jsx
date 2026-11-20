@@ -4,7 +4,7 @@ import MachinesLibrary from "./machines/MachinesLibrary";
 import { useMachinesData } from "./../../context/MachinesContext";
 
 const MachinesGuide = () => {
-  const { machines } = useMachinesData();
+  const { machines, machinesLoading, machinesError } = useMachinesData();
 
   return (
     <main className="mx-auto mt-6 w-full px-5 sm:px-8 mb-10">
@@ -12,7 +12,11 @@ const MachinesGuide = () => {
       <MembersMachinesHero machines={machines} />
 
       {/* Equipment Library */}
-      <MachinesLibrary machines={machines} />
+      <MachinesLibrary
+        machines={machines}
+        machinesLoading={machinesLoading}
+        machinesError={machinesError}
+      />
     </main>
   );
 };

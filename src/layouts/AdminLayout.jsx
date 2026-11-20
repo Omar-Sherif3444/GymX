@@ -15,6 +15,8 @@ import RegistrationSuccess from "./../pages/admin/RegistrationSuccess";
 import AdminNavbar from "../components/admin/AdminNavbar";
 import AdminSidebar from "../components/admin/AdminSidebar";
 import Reports from "../pages/admin/Reports";
+import MachinesManaging from "../pages/admin/MachinesManaging";
+import MachineDetails from "./../pages/admin/MachineDetails";
 
 const AdminLayout = () => {
   const { lightMode } = useTheme();
@@ -35,6 +37,11 @@ const AdminLayout = () => {
                 <Routes>
                   <Route index element={<AdminDashboard />} />
                   <Route path="check-in" element={<CheckIn />} />
+                  <Route path="machines" element={<MachinesManaging />} />
+                  <Route
+                    path="machines/:id/edit"
+                    element={<MachineDetails />}
+                  />
                   <Route path="staff" element={<Staff />} />
                   <Route path="announcements" element={<Announcements />} />
                   <Route
