@@ -3,15 +3,14 @@ import { useMachinesData } from "../../context/MachinesContext";
 import MachineSearch from "../member/machines/MachineSearch";
 import { machineFilters } from "../../context/machineData";
 import AddButton from "./machines/AddButton";
-import EditButton from "./machines/EditButton";
-import DeleteButton from "./machines/DeleteButton";
-import AdminMachinesCard from "./machines/AdminMachinesCard";
 import MachinesCardSkeleton from "../../components/MachinesCardSkeleton";
+import AdminMachinesTable from "./machines/AdminMachinesTable";
+import AdminMachinesTableSkeleton from "./machines/AdminMachinesTableSkeleton";
 
 const MachinesManaging = () => {
   const [activeFilter, setActiveFilter] = useState("all");
 
-  const { machines, machinesLoading, machinesError } = useMachinesData();
+  const { machines = [], machinesLoading, machinesError } = useMachinesData();
 
   // Find the selected filter
   const filter = machineFilters.find((item) => item.value === activeFilter);
@@ -32,89 +31,100 @@ const MachinesManaging = () => {
   });
 
   return (
-    <section className="min-h-screen bg-(--gym-bg) px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+    <section className="min-h-screen min-w-0 w-full max-w-full overflow-x-hidden bg-(--gym-bg) px-4 py-6 sm:px-6 lg:px-8">
       {/* Page Header */}
-      <div className="mb-8 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="font-[Big_Shoulders_Display] text-4xl font-bold uppercase text-(--gym-text) sm:text-5xl">
-            Machines Managing
+          <p className="mb-1 font-[Barlow] text-sm font-bold uppercase tracking-widest text-(--gym-label)">
+            Equipment Management
+          </p>
+
+          <h2 className="font-[Big_Shoulders_Display] text-4xl font-bold uppercase leading-none text-(--gym-text) sm:text-5xl">
+            Machines
           </h2>
 
-          <p className="mt-1 font-[Barlow] text-sm text-(--gym-subtext)">
-            Manage, edit and monitor your gym machines.
-          </p>
+          {!machinesLoading && !machinesError && (
+            <p className="mt-2 font-[Barlow] text-base font-semibold text-(--gym-subtext)">
+              {machines.length} machines in your inventory
+            </p>
+          )}
         </div>
 
-        {/* Machine Dashboard Control Buttons */}
-        <div className="flex flex-wrap items-center gap-2 sm:justify-end">
+        <div className="shrink-0">
           <AddButton />
-          <EditButton />
-          <DeleteButton />
         </div>
       </div>
 
-      {/* Search & Scan */}
-      <div className="mb-6">
-        <MachineSearch />
-      </div>
+      {/* Search & Filter Toolbar */}
+      <div className="mb-6 grid min-w-0 grid-cols-1 gap-4 rounded-xl border border-(--gym-line) bg-(--gym-card) p-4 lg:grid-cols-[minmax(0,1fr)_220px] lg:items-center">
+        {/* Search */}
+        <div className="min-w-0">
+          <MachineSearch />
+        </div>
 
-      {/* Category Filters */}
-      <div className="mb-7 flex flex-wrap gap-2">
-        {machineFilters.map((category) => (
-          <button
-            key={category.value}
-            type="button"
-            onClick={() => setActiveFilter(category.value)}
-            className={`rounded-full border px-4 py-2.5 font-[Barlow] text-xs font-semibold transition-all duration-200 ${
-              activeFilter === category.value
-                ? "border-orange bg-orange text-white"
-                : "border-(--gym-line) bg-transparent text-(--gym-text) hover:border-orange hover:text-orange"
-            }`}
+        {/* Category Filter */}
+        <div className="flex min-w-0 flex-col gap-2">
+          <label
+            htmlFor="machine-category"
+            className="font-[Barlow] text-sm font-bold text-(--gym-text)"
           >
-            {category.label}
-          </button>
-        ))}
+            Filter by Category
+          </label>
+
+          <select
+            id="machine-category"
+            value={activeFilter}
+            onChange={(e) => setActiveFilter(e.target.value)}
+            className="w-full cursor-pointer rounded-lg border border-(--gym-line) bg-(--gym-surface) px-3 py-3 font-[Barlow] text-base font-semibold text-(--gym-text) outline-none transition-colors focus:border-orange"
+          >
+            {machineFilters.map((category) => (
+              <option
+                key={category.value}
+                value={category.value}
+                className="bg-(--gym-card) text-(--gym-text)"
+              >
+                {category.label}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
-      {/* Machines Count */}
+      {/* Results Summary */}
       {!machinesLoading && !machinesError && (
-        <div className="mb-4 flex items-center justify-between">
-          <p className="font-[Barlow] text-sm text-(--gym-subtext)">
+        <div className="mb-4 flex items-center justify-between gap-3">
+          <p className="font-[Barlow] text-sm font-semibold text-(--gym-subtext)">
             Showing{" "}
             <span className="font-bold text-(--gym-text)">
               {filteredMachines.length}
             </span>{" "}
-            machines
+            of {machines.length} machines
           </p>
+
+          {activeFilter !== "all" && (
+            <button
+              type="button"
+              onClick={() => setActiveFilter("all")}
+              className="font-[Barlow] text-sm font-bold text-orange transition-colors hover:text-(--gym-label)"
+            >
+              Clear Filter
+            </button>
+          )}
         </div>
       )}
 
-      {/* Machines Cards */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      {/* Machines Table */}
+      <div className="min-w-0 w-full">
         {machinesLoading ? (
-          Array.from({ length: 8 }).map((_, index) => (
-            <MachinesCardSkeleton key={index} />
-          ))
+          <AdminMachinesTableSkeleton rows={5} />
         ) : machinesError ? (
-          <div className="col-span-full rounded-xl border border-(--gym-line) bg-(--gym-card) py-12 text-center">
-            <p className="font-[Barlow] text-sm text-red-500">
+          <div className="rounded-xl border border-red-500/20 bg-(--gym-card) px-5 py-14 text-center">
+            <p className="font-[Barlow] text-base font-semibold text-red-500">
               {machinesError}
             </p>
           </div>
-        ) : filteredMachines.length > 0 ? (
-          filteredMachines.map((machine) => (
-            <AdminMachinesCard key={machine.id} machine={machine} />
-          ))
         ) : (
-          <div className="col-span-full rounded-xl border border-(--gym-line) bg-(--gym-card) py-12 text-center">
-            <p className="font-[Big_Shoulders_Display] text-2xl font-bold uppercase text-(--gym-text)">
-              No machines found
-            </p>
-
-            <p className="mt-2 font-[Barlow] text-sm text-(--gym-subtext)">
-              There are no machines available in this category.
-            </p>
-          </div>
+          <AdminMachinesTable machines={filteredMachines} />
         )}
       </div>
     </section>
