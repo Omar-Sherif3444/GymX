@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 import Hero from "../../components/landing/Hero";
 import HowItWorks from "../../components/landing/HowItWorks";
 import Bundles from "../../components/landing/Bundles";
@@ -25,13 +27,16 @@ export default function LandingPage() {
 
   return (
     <>
+      <Navbar />
       <Hero ref={register("top")} />
+
       <HowItWorks ref={register("how")} />
       <Bundles ref={register("bundles")} />
       <Machines ref={register("machines")} />
       <Challenges ref={register("challenges")} />
       <About ref={register("about")} />
       <CtaBanner />
+      <Footer />
     </>
   );
 }
