@@ -9,6 +9,7 @@ import {
   LuFileText,
   LuChartNoAxesColumnIncreasing,
   LuUser,
+  LuLogOut,
 } from "react-icons/lu";
 import { useTheme } from "../../context/ThemeContext";
 import logoDark from "../../assets/logo-dark.png";
@@ -72,6 +73,15 @@ export default function AdminSidebar() {
           <p className="text-xs text-sub">Staff</p>
         </div>
       </div>
+
+      <Link
+        to="/"
+        title="Logout"
+        className="mt-2 flex items-center justify-center gap-3 rounded-lg px-3 py-2.5 text-sm text-sub transition hover:bg-red-500/10 hover:text-red-500 lg:justify-start"
+      >
+        <LuLogOut size={18} className="shrink-0" />
+        <span className="hidden lg:inline">Logout</span>
+      </Link>
     </aside>
   );
 }
