@@ -2,7 +2,11 @@ export const NAV_ITEMS = [
   { label: "Home", hash: "", activeFor: ["", "#top"] },
   { label: "How it works", hash: "#how", activeFor: ["#how", "#machines", "#challenges"] },
   { label: "Bundles", hash: "#bundles", activeFor: ["#bundles"] },
+
+  { label: "Machines", to: "/machines", activeFor: [] },
+  { label: "plans", to: "/plans", activeFor: [] },
   { label: "About us", hash: "#about", activeFor: ["#about"] },
+
 ];
 
 export const STEPS = [
