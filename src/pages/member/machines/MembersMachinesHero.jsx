@@ -55,7 +55,7 @@ const MembersMachinesHero = ({ machines }) => {
           {/* Statistics */}
           <div className="flex flex-wrap gap-x-8 gap-y-5 sm:gap-x-10">
             <div className="flex min-w-20 flex-col gap-1">
-              <span className="font-['Big_Shoulders_Display'] text-3xl font-bold text-[#FF5A1F]">
+              <span className="font-['Big_Shoulders_Display'] text-3xl font-bold text-orange">
                 {machines.length}
               </span>
               <span className="font-[Barlow] text-[9px] font-semibold uppercase tracking-widest text-(--gym-subtext)">
@@ -64,7 +64,7 @@ const MembersMachinesHero = ({ machines }) => {
             </div>
 
             <div className="flex min-w-20 flex-col gap-1">
-              <span className="font-['Big_Shoulders_Display'] text-3xl font-bold text-[#FF5A1F]">
+              <span className="font-['Big_Shoulders_Display'] text-3xl font-bold text-orange">
                 {
                   machines.filter((machine) => machine.state === "working")
                     .length

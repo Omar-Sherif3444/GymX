@@ -12,7 +12,7 @@ export default function CtaBanner() {
     >
       <div className="mx-auto flex max-w-[1100px] flex-wrap items-end justify-between gap-5">
         <div>
-          <Label className="!text-[#FFE2D6]">Ready when you are</Label>
+          <Label className="text-[#FFE2D6]!">Ready when you are</Label>
           <Display className="mt-2.5">
             Ask your gym for
             <br />a GYMX pass.

@@ -1,15 +1,16 @@
+import { forwardRef } from "react";
 import ButtonLink from "../ButtonLink";
 import { Display, Label } from "../ui";
 import heroImg from "../../assets/hero.jpg";
 
-export default function Hero({ ref }) {
+const Hero = forwardRef(function Hero(_props, ref) {
   return (
     <section
       ref={ref}
       className="relative flex min-h-[580px] items-center bg-cover bg-center"
       style={{ backgroundImage: `url(${heroImg})` }}
     >
-      <div className="absolute inset-0 bg-hero-overlay" />
+      <div className="absolute inset-0 bg-(image:--lp-hov)" />
 
       <div className="relative z-10 flex max-w-[660px] flex-col justify-center gap-4 px-[22px] py-11 md:px-10 md:py-16">
         <Label>Your gym. In your pocket.</Label>
@@ -18,9 +19,9 @@ export default function Hero({ ref }) {
           <br />
           Scan in.
           <br />
-          Lift <span className="text-grad">more.</span>
+          Lift <span className="bg-[linear-gradient(135deg,#ff8a1f,#ff4a2a_45%,#e5214a)] bg-clip-text text-transparent">more.</span>
         </Display>
-        <p className="max-w-[420px] text-sm text-sub">
+        <p className="max-w-[420px] text-sm text-(--lp-sub)">
           One pass for every visit, machine guide, challenge, and connection at your gym.
         </p>
         <div className="mt-1.5 flex flex-wrap gap-2.5">
@@ -38,4 +39,6 @@ export default function Hero({ ref }) {
       </span>
     </section>
   );
-}
+});
+
+export default Hero;

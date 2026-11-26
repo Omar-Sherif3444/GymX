@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@heroui/react": "^3.2.7",
+    "@heroui/styles": "^3.2.7",
     "@tailwindcss/vite": "^4.3.3",
     "daisyui": "^5.7.50",
     "dotenv": "^18.0.10",

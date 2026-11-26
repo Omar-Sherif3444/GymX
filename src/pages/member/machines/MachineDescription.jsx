@@ -3,18 +3,45 @@ import { Link, useParams } from "react-router-dom";
 import { useMachinesData } from "../../../context/MachinesContext";
 
 const MachineDescription = () => {
-  const { machines } = useMachinesData();
+  const { machines, machinesLoading, machinesError } = useMachinesData();
   const { machineId } = useParams();
 
   const machineData = machines.find(
     (machine) => String(machine.id) === machineId,
   );
 
+  if (machinesLoading) {
+    return (
+      <section className="min-h-screen bg-(--gym-bg) px-4 py-8">
+        <p className="font-[Barlow] text-(--gym-subtext)">
+          Loading machine details...
+        </p>
+      </section>
+    );
+  }
+
+  if (machinesError) {
+    return (
+      <section className="min-h-screen bg-(--gym-bg) px-4 py-8">
+        <p className="font-[Barlow] text-red-500">{machinesError}</p>
+        <Link
+          to="/member/machines-guide"
+          className="mt-4 inline-block font-[Barlow] font-semibold text-(--gym-label)"
+        >
+          Back to machines
+        </Link>
+      </section>
+    );
+  }
+
   if (!machineData) {
     return (
       <section className="min-h-screen bg-(--gym-bg) px-4 py-8">
-        <p className="text-(--gym-text)">Machine not found.</p>
-        <Link to="/member/machines-guide" className="text-(--gym-label)">
+        <p className="font-[Barlow] text-(--gym-text)">Machine not found.</p>
+        <Link
+          to="/member/machines-guide"
+          className="mt-3 inline-block font-[Barlow] font-semibold text-(--gym-label) hover:underline"
+        >
           Back to machines
         </Link>
       </section>
@@ -22,12 +49,12 @@ const MachineDescription = () => {
   }
 
   return (
-    <section className="min-h-screen bg-(--gym-bg) px-4 py-8 sm:px-6 lg:px-10">
+    <section className="min-h-screen bg-(--gym-bg) px-4 py-6 sm:px-6 sm:py-8 lg:px-10">
       <div className="mx-auto max-w-7xl">
         {/* Back navigation */}
         <Link
           to="/member/machines-guide"
-          className="mb-6 inline-flex items-center gap-2 font-[DM_Sans] text-sm font-semibold text-(--gym-subtext) transition-colors hover:text-(--gym-label)"
+          className="mb-6 inline-flex items-center gap-2 font-[Barlow] text-sm font-semibold text-(--gym-subtext) transition-colors hover:text-(--gym-label)"
         >
           <FiArrowLeft />
           Back to machines
@@ -37,7 +64,7 @@ const MachineDescription = () => {
         <div className="overflow-hidden rounded-2xl border border-(--gym-line) bg-(--gym-card) shadow-lg">
           <div className="grid grid-cols-1 lg:grid-cols-2">
             {/* Machine image */}
-            <div className="relative min-h-72 bg-(--gym-surface) sm:min-h-100">
+            <div className="relative min-h-64 bg-(--gym-surface) sm:min-h-80 lg:min-h-105">
               <img
                 src={machineData.image}
                 alt={machineData.name}
@@ -49,7 +76,7 @@ const MachineDescription = () => {
             </div>
 
             {/* Machine information */}
-            <div className="flex flex-col p-6 sm:p-8 lg:p-10">
+            <div className="flex flex-col p-5 sm:p-8 lg:p-10">
               {/* Status */}
               <div className="mb-5 flex items-center gap-2">
                 <span className="h-2.5 w-2.5 rounded-full bg-green-500" />
@@ -59,24 +86,25 @@ const MachineDescription = () => {
               </div>
 
               {/* Machine title */}
-              <h1 className="font-['Big_Shoulders_Display'] text-4xl font-bold uppercase text-(--gym-text) sm:text-5xl">
+              <h1 className="font-[Big_Shoulders_Display] text-4xl font-bold uppercase text-(--gym-text) sm:text-5xl lg:text-6xl">
                 {machineData.name}
               </h1>
 
               {/* Description */}
-              <p className="mt-4 font-[DM_Sans] text-sm leading-7 text-(--gym-subtext)">
+              <p className="mt-4 font-[Barlow] text-sm leading-7 text-(--gym-subtext) sm:text-base">
                 {machineData.description}
               </p>
 
               {/* Machine details */}
-              <div className="mt-8 grid grid-cols-2 gap-4">
+              <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
                 <div className="rounded-xl border border-(--gym-line) bg-(--gym-surface) p-4">
                   <span className="font-[Barlow] text-xs font-semibold uppercase tracking-wider text-(--gym-label)">
                     Target muscles
                   </span>
-                  <p className="mt-2 font-[DM_Sans] text-sm text-(--gym-text)">
-                    {" "}
-                    {machineData.muscle}
+                  <p className="mt-2 font-[Barlow] text-sm text-(--gym-text)">
+                    {Array.isArray(machineData.muscle)
+                      ? machineData.muscle.join(", ")
+                      : machineData.muscle}
                   </p>
                 </div>
 
@@ -84,7 +112,7 @@ const MachineDescription = () => {
                   <span className="font-[Barlow] text-xs font-semibold uppercase tracking-wider text-(--gym-label)">
                     Difficulty
                   </span>
-                  <p className="mt-2 font-[DM_Sans] text-sm text-(--gym-text)">
+                  <p className="mt-2 font-[Barlow] text-sm text-(--gym-text)">
                     {machineData.difficulty}
                   </p>
                 </div>
@@ -99,28 +127,35 @@ const MachineDescription = () => {
                   </h2>
                 </div>
 
-                <p className="font-[DM_Sans] text-sm leading-7 text-(--gym-subtext)"></p>
+                <p className="font-[Barlow] text-sm leading-7 text-(--gym-subtext)">
+                  {machineData.importantInformation ||
+                    "Follow the instructions and maintain proper form while using this machine."}
+                </p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Instructions section */}
-        <div className="mt-8 rounded-2xl border border-(--gym-line) bg-(--gym-card) p-6 sm:p-8">
-          <h2 className="font-['Big_Shoulders_Display'] text-3xl font-bold uppercase text-(--gym-text)">
+        <div className="mt-6 rounded-2xl border border-(--gym-line) bg-(--gym-card) p-5 sm:mt-8 sm:p-8">
+          <h2 className="font-[Big_Shoulders_Display] text-3xl font-bold uppercase text-(--gym-text) sm:text-4xl">
             How to use
           </h2>
 
-          <div className="mt-6 space-y-4">{machineData.howToUse}</div>
+          <div className="mt-6 space-y-4 font-[Barlow] text-sm leading-7 text-(--gym-subtext) sm:text-base">
+            {machineData.howToUse}
+          </div>
         </div>
 
         {/* Safety tips section */}
-        <div className="mt-6 rounded-2xl border border-(--gym-line) bg-(--gym-card) p-6 sm:p-8">
-          <h2 className="font-['Big_Shoulders_Display'] text-3xl font-bold uppercase text-(--gym-text)">
+        <div className="mt-6 rounded-2xl border border-(--gym-line) bg-(--gym-card) p-5 sm:p-8">
+          <h2 className="font-[Big_Shoulders_Display] text-3xl font-bold uppercase text-(--gym-text) sm:text-4xl">
             Safety tips
           </h2>
 
-          <div className="mt-6 space-y-4">{machineData.safetyTips}</div>
+          <div className="mt-6 space-y-4 font-[Barlow] text-sm leading-7 text-(--gym-subtext) sm:text-base">
+            {machineData.safetyTips}
+          </div>
         </div>
       </div>
     </section>
