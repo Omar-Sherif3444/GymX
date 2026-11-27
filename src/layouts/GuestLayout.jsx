@@ -3,10 +3,10 @@ import { landingTokens } from "../components/theme";
 import { useLandingTheme } from "../components/useLandingTheme";
 import MachinesContext from "../context/MachinesContext";
 import MachinesGuide from "../pages/member/MachinesGuide";
-import Plans from "../pages/member/Plans";
 import Landing from "../pages/public/Landing";
 import Login from "../pages/public/Login";
 import NotFound from "../pages/public/NotFound";
+import HomePlans from "../pages/public/HomePlans";
 
 const GuestLayout = () => {
   const { theme } = useLandingTheme();
@@ -30,7 +30,7 @@ const GuestLayout = () => {
               </MachinesContext>
             }
           />
-          <Route path="plans" element={<Plans />} />
+          <Route path="plans" element={<HomePlans />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
